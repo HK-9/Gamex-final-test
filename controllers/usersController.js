@@ -1,5 +1,7 @@
 const UsersModel = require("./../model/usersSchema");
 const ProductsModel = require("../model/productsSchema")
+const jwt = require("jsonwebtoken");
+const utils = require('../util/utils')
 
 exports.indexRoute =  async (req, res, next) => {
   let logged;
@@ -76,6 +78,26 @@ exports.deleteUserRouter = async (req, res, next) => {
 // }
 
 //product detail
-exports.product_detail = (req,res,next){
-  res.render('users/products_detail')
-}
+exports.productDetailRoute =async (req,res,next) => {
+  const productId = await utils.getProduct(req)
+  let id = req.params.id;
+  const byId = await ProductsModel.findById(id).lean()
+  const product = await ProductsModel.find().lean()
+  // const params =  jwt.sign({ params: req.params.id}, process.env.JWT_SECRET, {
+  //   expiresIn: 90000,
+  // });
+
+
+
+  console.log( 'params ==',params);
+
+  token = await req.headers.cookie.split("=")[1];
+  console.log(token, 'header');
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  user = await UsersModel.findById(decoded.id);
+  console.log('after Split',user);
+  res.render('users/products_detail',{
+    product,byId,user,
+    layout: 'tempLayout'
+  })
+} 

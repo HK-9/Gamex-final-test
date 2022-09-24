@@ -3,6 +3,7 @@ const adminController = require("./../controllers/admin/adminController");
 const authController = require("./../controllers/admin/authController")
 const productsController = require("./../controllers/admin/productsController")
 const categoryController = require('./../controllers/admin/categoryController')
+const cartController = require('../controllers/cartController')
 var router = express.Router();
 
 const upload = require('./../controllers/admin/multer/multer')

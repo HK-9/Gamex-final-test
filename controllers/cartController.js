@@ -10,8 +10,7 @@ const utils = require('../util/utils');
   exports.cartRoute = async function (req, res, next) {
   const logged = await utils.partialCheck(req)
    const user = await utils.getUser(req)
-    const cartData = await utils.cartDet
-    ails(user._id)
+    const cartData = await utils.cartDetails(user._id)
     // console.log('caaaaaaaaaaaaart',cartData)
     const cart = CartModel.find().lean()
    

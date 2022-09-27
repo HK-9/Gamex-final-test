@@ -23,6 +23,9 @@ const productsSchema = mongoose.Schema({
     },
     discription:{       
         type: String 
+    },
+    quantity:{
+        type:Number,
     }
 })
 const ProductsModel = mongoose.model('products',productsSchema)

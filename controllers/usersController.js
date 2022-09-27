@@ -1,18 +1,18 @@
 const UsersModel = require("./../model/usersSchema");
 const ProductsModel = require("../model/productsSchema")
 const jwt = require("jsonwebtoken");
-const utils = require('../util/utils')
+const utils = require('../util/utils');
+const CartModel = require("../model/cartSchenma");
 
 exports.indexRoute =  async (req, res, next) => {
-  let logged;
+  const user = UsersModel.find().lean()
+  const logged = await utils.partialCheck(req)
   const products = await ProductsModel.find().lean();
-  partialCheck = req.headers.cookie 
-  if(partialCheck){
-   logged = true
-  }else if (!partialCheck) {
-    logged = false
-  }
-  res.render("users/index", { userLoggedIn:logged,products});
+  res.render("users/index", { 
+    userLoggedIn:logged,
+    products,
+    
+  });
   
     // res.render('admin/dashboard/products',{admin:true, layout: 'adminLayout',products})
 };
@@ -20,16 +20,15 @@ exports.loginRoute = function (req, res, next) {
 
   res.render("users/login");
 };
-exports.productDetailRoute = function(req,res,next){
-  res.render('users/productDetail') 
+exports.productDetailRoute = async function(req,res,next){
+  const logged = await utils.partialCheck(req)
+  res.render('users/productDetail',{
+    userLoggedIn:logged,
+  }),
   next()
 }
 exports.registerRoute = function (req, res, next) {
   res.render("users/register");
-};
-
-exports.cartRoute = function (req, res, next) {
-  res.render("users/cart");
 };
 exports.checkoutRoute = function (req, res, next) {
   res.render("users/checkout");
@@ -79,25 +78,16 @@ exports.deleteUserRouter = async (req, res, next) => {
 
 //product detail
 exports.productDetailRoute =async (req,res,next) => {
-  const productId = await utils.getProduct(req)
-  let id = req.params.id;
-  const byId = await ProductsModel.findById(id).lean()
+  const logged = await utils.partialCheck(req)
+  let productId = req.params.id;
+  const byId = await ProductsModel.findById(productId).lean()
   const product = await ProductsModel.find().lean()
-  // const params =  jwt.sign({ params: req.params.id}, process.env.JWT_SECRET, {
-  //   expiresIn: 90000,
-  // });
-
-
-
-  console.log( 'params ==',params);
-
   token = await req.headers.cookie.split("=")[1];
-  console.log(token, 'header');
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
   user = await UsersModel.findById(decoded.id);
-  console.log('after Split',user);
+  
   res.render('users/products_detail',{
-    product,byId,user,
+    product,byId,user,userLoggedIn:logged,
     layout: 'tempLayout'
   })
 } 

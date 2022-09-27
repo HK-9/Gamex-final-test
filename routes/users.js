@@ -11,10 +11,10 @@ router.get("/", userController.indexRoute);
 router.get("/login", userController.loginRoute);
 router.get("/logout", authController.loggedOut);
 router.get("/register", userController.registerRoute);
-router.get("/productDetail", userController.productDetailRoute);
-router.get("/cart", authController.protect, userController.cartRoute);
-router.get("/checkout", userController.checkoutRoute);
-router.get("/product_detail/:id",userController.productDetailRoute)
+router.get("/productDetail",authController.protect, userController.productDetailRoute);
+router.get("/cart",authController.protect, cartController.cartRoute);
+router.get("/checkout",authController.protect, userController.checkoutRoute);
+router.get("/product_detail/:id",authController.protect,userController.productDetailRoute)
 
 //USER AUTH CONTROLLERS
 
@@ -24,6 +24,8 @@ router.delete("/deleteUser/:id", userController.deleteUserRouter);
 
 //ACTION CONTROLLERS
 
-router.get('/addToCart',cartController.cartRoute)
+router.post('/addToCart/:id',cartController.uploadCartRoute)
+router.post('/increment',cartController.updateQty)
+router.post('/remove-product',cartController.deleteCart)
 
 module.exports = router;

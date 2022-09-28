@@ -15,12 +15,13 @@ router.get("/productDetail",authController.protect, userController.productDetail
 router.get("/cart",authController.protect, cartController.cartRoute);
 router.get("/checkout",authController.protect, userController.checkoutRoute);
 router.get("/product_detail/:id",authController.protect,userController.productDetailRoute)
-
+router.get("/otp",authController.otpRoute)
 //USER AUTH CONTROLLERS
 
 router.post("/regsubmit", authController.SubmitRoute);
 router.post("/loginSubmit", authController.loginSubmit);
 router.delete("/deleteUser/:id", userController.deleteUserRouter);
+router.post('/otp_verify',authController.otpVerify)
 
 //ACTION CONTROLLERS
 

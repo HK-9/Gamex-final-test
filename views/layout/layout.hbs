@@ -153,9 +153,12 @@
 		{{>admin-header}}
 		{{else if userLoggedIn}}
 		{{>users-header}}
+		{{else if noHeader}}
+		{{NULL}}
 		{{else}}
 		{{>guestUsers-header}}
 		{{/if}}
+
 
 		{{{body}}}
 		<!--===============================================================================================-->

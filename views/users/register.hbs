@@ -12,7 +12,7 @@
       {{!-- <img src="/static_files/images/logos/rockMoon.png" alt="Company Logo" height="48"> --}}
       <h3 class="ltext-103" style="color:white;">REGISTER</h3>
     </div>
-    <form action="/regsubmit" id="adduserform"  method="post" >
+    <form id="adduserform" action="/regsubmit"  method="post" >
       <div>
         <span class="inputLogo"><i class="bi bi-person"></i></span><input type="text"  id="name" class="form-control rounded-pill" name="name" placeholder="Your Name" required>
       </div>
@@ -29,13 +29,12 @@
       <div class="my-2">
         <span class="inputLogo"><i class="bi bi-lock"></i></span><input type="conpassword" id="conpasword" class="form-control rounded-pill" name="conpassword" placeholder="Confirm Password ">
       </div>
-      <button class="btn btn-accent rounded-pill w-100 mt-2" type="submit">CREATE ACCOUNT</button>
+      <button class="btn btn-accent rounded-pill w-100 mt-2" type="" onclick="register">CREATE ACCOUNT</button>
       </div>
     </form>
   </div>
 </div>
 
-<script>
 <script>
     $(document).ready(function () {
       $("#adduserform").validate({
@@ -75,5 +74,13 @@
 <style>
   .error {
     color: red;
-  }
+  }`
 </style>
+
+<script>
+ 	function register(){
+				axios({
+					method:'post',
+					url:'/regsubmit',
+				})
+</script>

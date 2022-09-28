@@ -5,6 +5,7 @@ const utils = require('../util/utils');
 const CartModel = require("../model/cartSchenma");
 
 exports.indexRoute =  async (req, res, next) => {
+
   const user = UsersModel.find().lean()
   const logged = await utils.partialCheck(req)
   const products = await ProductsModel.find().lean();
@@ -22,6 +23,8 @@ exports.loginRoute = function (req, res, next) {
 };
 exports.productDetailRoute = async function(req,res,next){
   const logged = await utils.partialCheck(req)
+  const user = await utils.userDetails(req)
+  console.log('',user)
   res.render('users/productDetail',{
     userLoggedIn:logged,
   }),

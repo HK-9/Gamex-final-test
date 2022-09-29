@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const AppError = require("./../util/AppError");
 const { token } = require("morgan");
 const { resolve } = require("path");
+const { findOne, findOneAndUpdate } = require("../model/categorySchema");
 
 // const { token } = require('morgan');
 
@@ -45,7 +46,7 @@ exports.SubmitRoute = async (req, res) => {
 //=========================================LOGIN==========================================================//
 
 exports.loginSubmit = async (req, res, next) => {
-  // try {
+  try {
     // const emailid = req.body.emailid => here, emailid in both property and variable are same we can be destructure it into the following
     const { email, password } = req.body;
     
@@ -83,17 +84,19 @@ exports.loginSubmit = async (req, res, next) => {
      const otpVerify = user.IsOtpVerified;
      console.log('otpVerify:',otpVerify)
      if(otpVerify==false){
+      const userId = user._id
+      await UsersModel.updateOne({ _id: userId }, { $set: { IsOtpVerified: true } });
       return res.status(200).cookie('jwt',token).redirect('/otp')
      }
-    res.send('hai')
+     res.status(200).cookie('jwt',token).redirect('/')
     
-  // } catch (err) {
-  //   res.status(400).json({
-  //     status: "fail",
-  //     message: "Login catch block ",
-  //     data:err
-  //   });
-  // }
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: "Login catch block ",
+      data:err
+    });
+  }
 };
 //======================================LOG OUT===================================================
 exports.loggedOut = (req,res,next) => {
@@ -170,7 +173,9 @@ exports.otpRoute = async (req,res,next)=>{
   res.render('users/otp')
 }
 exports.otpVerify = async(req,res,next) =>{
-  
+  const user = await utils.getUser(req);
+  const phone = user.phone
+
   const obj = req.body
   const otp = Object.values(obj).join('');
   console.log('otp form data:------',otp)
@@ -178,7 +183,7 @@ exports.otpVerify = async(req,res,next) =>{
   .services(serviceID)
   .verificationChecks
   .create({
-    to:"+919847128459",
+    to:`+91${phone}`,
     code: otp ,
   })
   .then(resp => {

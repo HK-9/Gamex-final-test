@@ -30,7 +30,7 @@
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-minus" onclick="incrementQty('{{this.product._id}}',0)"></i>
 											</div>
-											<input id="increment{{this.product._id}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="num-product"  >
+											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="num-product"  >
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												{{!-- <a onclick="increment(`{{this.product._id}}`)" id="increment"</a> --}}
@@ -320,7 +320,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 		function incrementQty(id,num){
 			let qty = document.getElementById('increment'+id).value
-			console.log('111111111111111111111',qty)
 			qty = parseInt(qty)
 			console.log(typeof(qty))
 			if(num===1){

@@ -85,7 +85,8 @@
 								<a href="index.html">My profile</a> 
 								
 								<ul class="sub-menu">
-									<li><a>Signed in as: {{user._id}}</a></li>
+					
+									<li><a>Signed in as : {{#each user}} {{this.name}}{{/each}}</a></li>
 									<li><a href="/logout"><span style="color:rgb(161, 0, 0) ;">Logout</a></li>
 								</ul>
 							</li>
@@ -227,51 +228,21 @@
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
+						{{#each cartData.products}}
 						<div class="header-cart-item-img">
 							<img src="images/item-cart-01.jpg" alt="IMG">
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
+								{{this.product.title}}
 							</a>
 
 							<span class="header-cart-item-info">
 								1 x $19.00
 							</span>
 						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-02.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $39.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-03.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $17.00
-							</span>
-						</div>
+						{{/each}}
 					</li>
 				</ul>
 				

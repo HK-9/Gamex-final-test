@@ -106,7 +106,6 @@ exports.loggedOut = (req,res,next) => {
   });
   res.redirect('/login')
 }
-
 //======================================AUTH MIDDLEWARE===========================================
 
 exports.protect = async (req, res, next) => {
@@ -175,7 +174,6 @@ exports.otpRoute = async (req,res,next)=>{
 exports.otpVerify = async(req,res,next) =>{
   const user = await utils.getUser(req);
   const phone = user.phone
-
   const obj = req.body
   const otp = Object.values(obj).join('');
   console.log('otp form data:------',otp)

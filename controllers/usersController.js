@@ -3,15 +3,19 @@ const ProductsModel = require("../model/productsSchema")
 const jwt = require("jsonwebtoken");
 const utils = require('../util/utils');
 const CartModel = require("../model/cartSchenma");
+const { findById } = require("../model/categorySchema");
 
 exports.indexRoute =  async (req, res, next) => {
-
-  const user = UsersModel.find().lean()
+  const userId = await utils.getUser(req);
+  const user = await UsersModel.findById(userId)
+  const cartData = await utils.cartDetails(userId)
+  console.log('user------------:',user);
+  // const user = UsersModel.find().lean()
   const logged = await utils.partialCheck(req)
   const products = await ProductsModel.find().lean();
   res.render("users/index", { 
     userLoggedIn:logged,
-    products,
+    products,cartData,user
     
   });
   
@@ -33,9 +37,7 @@ exports.productDetailRoute = async function(req,res,next){
 exports.registerRoute = function (req, res, next) {
   res.render("users/register");
 };
-exports.checkoutRoute = function (req, res, next) {
-  res.render("users/checkout");
-};
+
 exports.regSubmitRoute = async (req, res) => {
   console.log(req.body);
 
@@ -81,6 +83,9 @@ exports.deleteUserRouter = async (req, res, next) => {
 
 //product detail
 exports.productDetailRoute =async (req,res,next) => {
+  const userId = await utils.getUser(req);
+  const cartData = await utils.cartDetails(userId)
+  console.log('cartData:=================',cartData);
   const logged = await utils.partialCheck(req)
   let productId = req.params.id;
   const byId = await ProductsModel.findById(productId).lean()
@@ -91,6 +96,6 @@ exports.productDetailRoute =async (req,res,next) => {
   
   res.render('users/products_detail',{
     product,byId,user,userLoggedIn:logged,
-    layout: 'tempLayout'
+    layout: 'tempLayout',cartData
   })
 } 

@@ -9,7 +9,7 @@ utils = {
       const payLoad = await jwt.verify(token, process.env.JWT_SECRET);
       userId = await UsersModel.findById(payLoad.id);
       return userId;
-      
+
         
       } catch (error) {
         console.log('USER NOT LOGGED IN',error)
@@ -34,12 +34,21 @@ utils = {
 
   cartDetails: async (userId)=>{
     const cartData = await CartModel.findOne({userId}).populate('products.product').lean()
-    console.log('test',cartData);
-    
-    // console.log('Cart Details',cartData.products[0]);
     return cartData
   },
 
-}
+  getProductsGrandTotal: async (userId) =>{
+    const cartData = await CartModel.findOne({userId}).populate('products.product').lean()
+    let products = cartData.products;
 
+    console.log('total---------------:',products[0].total)
+
+    const total = products.reduce((acc,curr)=>{
+      return acc += curr.total;
+    },0)
+    console.log("products>>>>>>>>>>>>>>>>>>>>>>:",total)
+    return total
+  }
+}
+//HOW TO USE >> getResult = utils.getGrandTotal(userId) 
 module.exports = utils;

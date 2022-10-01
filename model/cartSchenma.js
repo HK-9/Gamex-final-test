@@ -6,6 +6,9 @@ const cartSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
+    grandTotal: {
+      type: Number
+    },
     products: [
       {
         product: {
@@ -13,6 +16,9 @@ const cartSchema = new mongoose.Schema({
           ref: "products"
         },
         quantity: {
+          type: Number,
+        },
+        total: {
           type: Number,
         },
       },

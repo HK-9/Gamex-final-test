@@ -26,7 +26,7 @@ const productsSchema = mongoose.Schema({
     },
     quantity:{
         type:Number,
-    }
+    },
 })
 const ProductsModel = mongoose.model('products',productsSchema)
 module.exports = ProductsModel

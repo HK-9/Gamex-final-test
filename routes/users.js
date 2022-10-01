@@ -2,6 +2,7 @@ var express = require("express");
 const userController = require("./../controllers/usersController");
 const authController = require("./../controllers/authController");
 const cartController = require('../controllers/cartController')
+const checkoutController = require('../controllers/checkoutController')
 const { route } = require("./admin");
 var router = express.Router();
 
@@ -13,7 +14,7 @@ router.get("/logout", authController.loggedOut);
 router.get("/register", userController.registerRoute);
 router.get("/productDetail",authController.protect, userController.productDetailRoute);
 router.get("/cart",authController.protect, cartController.cartRoute);
-router.get("/checkout",authController.protect, userController.checkoutRoute);
+router.get("/checkout",authController.protect,checkoutController.checkoutRoute);
 router.get("/product_detail/:id",authController.protect,userController.productDetailRoute)
 router.get("/otp",authController.otpRoute)
 //USER AUTH CONTROLLERS
@@ -27,6 +28,8 @@ router.post('/otp_verify',authController.otpVerify)
 
 router.post('/addToCart/:id',cartController.uploadCartRoute)
 router.post('/increment',cartController.updateQty)
+router.post('/decrement',cartController.updateQty)
 router.post('/remove-product',cartController.deleteCart)
+router.post('/getProductGrandTotal',cartController.getProductGrandTotal)
 
 module.exports = router;

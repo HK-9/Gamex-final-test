@@ -28,25 +28,28 @@
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus" onclick="incrementQty('{{this.product._id}}',0)"></i>
+												<button onclick="incrementQty('{{this.product._id}}',0);grandTotal();">
+													<i class="fs-16 zmdi zmdi-minus"></i>
+												</button>
 											</div>
-											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="num-product"  >
+											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="numProduct"  >
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												{{!-- <a onclick="increment(`{{this.product._id}}`)" id="increment"</a> --}}
-												<i class="fs-16 zmdi zmdi-plus"  onclick="incrementQty('{{this.product._id}}',1)" ></i>
+												<i class="fs-16 zmdi zmdi-plus" onclick="incrementQty('{{this.product._id}}',1);grandTotal();" ></i>
 											</div>
 										</div>
 									</td>
 									<td class="column-5">
-										<button type="button" class="btn btn-danger" onclick="deleteProduct('{{this.product._id}}')" >
+										<button type="button" class="btn btn-danger" onclick="deleteProduct('{{this.product._id}}')">
 											<i class="bi bi-trash"></i>
 										</button>
 										{{!-- <a style="cursor: pointer ;" onclick="deleteProduct('{{this.product._id}}')"> --}}
 										
 										{{!-- </a> --}}
 									</td>
-									<td class="column-5">$ 36.00</td>
+									<td id="{{this.product._id}}" class="column-5"> {{this.total}}</td>
+									<h1></h1>
 								</tr>
 								{{/each}}
 
@@ -55,8 +58,8 @@
 
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
+								<i class="bi bi-tools btn-outline-warning fs-3"></i>
+								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">	
 								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
 									Apply coupon
 								</div>
@@ -83,8 +86,9 @@
 							</div>
 
 							<div class="size-209">
-								<span class="mtext-110 cl2">
-									$79.65
+								<span class="mtext-110 cl2">₹</span><span id="grandTotal" class="mtext-110 cl2">
+									
+									
 								</span>
 							</div>
 						</div>
@@ -103,7 +107,7 @@
 								
 								<div class="p-t-15">
 									<span class="stext-112 cl8">
-										Calculate Shipping
+										Choose Payment method
 									</span>
 
 									<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
@@ -136,13 +140,13 @@
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
-									Total:
+									Total: 
 								</span>
 							</div>
 
 							<div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
-									$79.65
+								<span id="grandTotal" class="mtext-110 cl2">
+									<i class="bi bi-tools btn-outline-warning fs-3"></i>
 								</span>
 							</div>
 						</div>
@@ -316,10 +320,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script>
 
-		//=======================INCREMENT QUANTITY=======================
+		//======================= I N C R E M E N T  Q U A N T I T Y =======================
 
 		function incrementQty(id,num){
 			let qty = document.getElementById('increment'+id).value
+			let numProduct = document.getElementById(id)
 			qty = parseInt(qty)
 			console.log(typeof(qty))
 			if(num===1){
@@ -327,23 +332,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			}else{
 				qty=qty-1
 			}
+			event.preventDefault()
 			axios({
 				method:'post',
 				url:'/increment',
 				data:{
 				product: id,
 				quantity:qty
-				}	
+				}
 		})
 		.then((e)=>{
-            e.data.response
-			console.log(e)
-            document.getElementById(id).innerHTML = e.data.quantity
-   			window.location.reload();
+	
+			const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-start',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+
+Toast.fire({
+  icon: 'success',
+  title: 'Item Updated'
+})
+		let productTotal = document.getElementById(id)
+			let productPrize = e.data.productPrice
+			productTotal.innerHTML = productPrize;
+
         })   
 		}
 
-		//=======================DELETE CART=============================
+		//======================= D E L E T E   C A R T =============================
 		function deleteProduct(id){
 				axios({
 					method:'post',
@@ -357,13 +381,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         Swal.fire({
 			showConfirmButton: false,
 			icon:'success',
-          title: 'Item Removed',
-         
+          title: 'Item Removed',      
         })
 		
 		setTimeout(function(){
-		window.location.reload();
-		}, 1100);
+		 window.location.reload();
+		},1000);
 		
       })
       .catch(function (error) {
@@ -376,6 +399,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
       });
 		}
+</script>
+<script>
+		//======================= P R O D U C T  G R A N T  T O T A L =============================
+	function grandTotal(){
+		axios({
+					method:'post',
+					url:'/getProductGrandTotal',
+				}).then((res) => {
+					let dbGrandTotal = res.data.price
+					let grandTotal = document.getElementById('grandTotal')
+					   	grandTotal.innerHTML= dbGrandTotal
+						console.log('GRAND TOTTAL.DATA',dbGrandTotal);
+				})
+		
+	}
 
 	</script>
 {{!-- <script>

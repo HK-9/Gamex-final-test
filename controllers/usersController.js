@@ -7,16 +7,14 @@ const { findById } = require("../model/categorySchema");
 
 exports.indexRoute =  async (req, res, next) => {
   const userId = await utils.getUser(req);
-  const user = await UsersModel.findById(userId)
+  const user = await UsersModel.findById(userId).lean()
   const cartData = await utils.cartDetails(userId)
-  console.log('user------------:',user);
   // const user = UsersModel.find().lean()
   const logged = await utils.partialCheck(req)
   const products = await ProductsModel.find().lean();
   res.render("users/index", { 
     userLoggedIn:logged,
-    products,cartData,user
-    
+    products,cartData,user,userId   
   });
   
     // res.render('admin/dashboard/products',{admin:true, layout: 'adminLayout',products})
@@ -30,7 +28,7 @@ exports.productDetailRoute = async function(req,res,next){
   const user = await utils.userDetails(req)
   console.log('',user)
   res.render('users/productDetail',{
-    userLoggedIn:logged,
+    userLoggedIn:logged,user
   }),
   next()
 }
@@ -81,13 +79,13 @@ exports.deleteUserRouter = async (req, res, next) => {
 //   const allUsers = await UsersModel.find(UsersModel)
 // }
 
-//product detail
+//====================================== P R O D U C T   D E T A I L   R  O U T E =============================//
+
 exports.productDetailRoute =async (req,res,next) => {
   const userId = await utils.getUser(req);
-  const cartData = await utils.cartDetails(userId)
-  console.log('cartData:=================',cartData);
+  const cartData = await utils.cartDetails(userId)  
   const logged = await utils.partialCheck(req)
-  let productId = req.params.id;
+  let productId = req.params.id;  
   const byId = await ProductsModel.findById(productId).lean()
   const product = await ProductsModel.find().lean()
   token = await req.headers.cookie.split("=")[1];
@@ -96,6 +94,22 @@ exports.productDetailRoute =async (req,res,next) => {
   
   res.render('users/products_detail',{
     product,byId,user,userLoggedIn:logged,
-    layout: 'tempLayout',cartData
+    layout: 'tempLayout',cartData,userId
   })
 } 
+
+exports.testRoute = async (req,res,next) => {
+  res.status(200).json({
+    message:'ethilo'
+  })
+},
+exports.cartDataNotifyRoute = async (req,res,next)=>{
+  const userId = req.body.userId
+  const getCartDataNotify = await utils.getCartDataNotify(userId);
+  console.log('xxxxxxxxxx',getCartDataNotify);
+  
+  res.status(200).json({
+    message:'Route is Successfull',
+    data: getCartDataNotify
+  })
+}

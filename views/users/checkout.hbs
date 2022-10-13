@@ -1,8 +1,6 @@
 
-
-<link rel="stylesheet" href="/checkout.css">
 <!-- Shoping Cart -->
-  <form class="bg0 p-t-75 p-b-85 mt-5">
+  <form class="bg0 p-t-75 mt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -10,7 +8,7 @@
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="pl-4"><span class="fs-6"> DELIVERY ADDRESSES </span></th>
+									<th class="pl-4"><span class="fs-5">CHECKOUT</span></th>
 							
 									
 								</tr>
@@ -31,7 +29,7 @@
 													<i class="fs-16 zmdi zmdi-minus"></i>
 												</button>
 											</div>
-											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="numProduct"  >
+											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="numProduct">
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												{{!-- <a onclick="increment(`{{this.product._id}}`)" id="increment"</a> --}}
@@ -56,44 +54,207 @@
 						</div>
 
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-20 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-150 m-tb-5">
-                <div class="addressStrip-base-title">
-                  <button type="radio"></button>
-                  <div class="addressStrip-base-addressName">
-                    Deliver to: <span class="addressStrip-base-highlight">
-                      Hari
-                      </span>
-                      <div class="addressStrip-base-highlight">
-                        , 673579
-                        </div>
-                        </div>
-                        <div class="addressStrip-base-subText">
-                          Puthavila-H,Parakkadav,Sasimala,Pulpally, Pulpally, Mananthavady
-                          </div>
-                          </div>
+
+								{{!--===================== ADDRESS CARD================== --}}
+
+							<div class="card mb-3 mb-md-4">
+								<div class="card-header d-flex align-items-center">
+									<h5 class="mtext-109 cl2 fs-6" id="test">SHIPPING ADDRESS</h5> <span class=" ml-3 badge badge-pill">Active</span>
+
+									<div class="position-relative ml-auto">
+										<button type="button" class="btn btn-icon btn-secondary btn-sm rounded-circle" href="#" data-toggle="modal" data-target="#exampleModal">
+											<i class="bi bi-plus-lg btn-icon-inner"></i>
+										</button>
+									</div>
+
+									<div class="position-relative ml-3 ml-md-4">
+										<a id="dropDown3Invoker" class="unfold-invoker d-flex" href="#" aria-controls="dropDown3" aria-haspopup="true" aria-expanded="false" data-unfold-target="#dropDown3" data-unfold-event="click" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
+											<i class="gd-more-alt"></i>
+										</a> 
+									</div>
+								</div>
+								<div class="card-body pt-0">
+									<div class="flex-w flex-m m-r-150 m-tb-5">
+									
+  					
+								<div class="addressStrip-base-title">
+								<button type="radio"></button> 	
+								<div class="addressStrip-base-addressName stext-111 cl2 p-t-2">
+									Deliver to: <span class="ml-1 addressStrip-base-highlight stext-111 cl6 p-t-2">
+									Hari,
+									</span>
+									<div class="addressStrip-base-highlight stext-111 cl6 p-t-2">
+										673579
+										</div>
+										</div>
+										<div class="addressStrip-base-subText stext-111 cl6 p-t-2">
+										Puthavila-H,Parakkadav,Sasimala,Pulpally, Pulpally, Mananthavady
+										</div>
+										</div>
 								<div class="flex-c-m ">
 								</div>
+								</div> 
+							 <div class="mt-3 mb-3 mr-3 position-absolute bottom-0 end-0 ">	
+                                <button type="button" class="btn btn-light rounded-pill" data-toggle="modal" data-target="#changeAddress">Change Address</button>
+							 </div>
 							</div>
-              
-
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								CHANGE ADDRESS
-							</div>
+                        </div>		
+{{!-- //=============================================================================================================================================================== --}}
+							
 						</div>
 
 
-            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<i class="bi bi-tools btn-outline-warning fs-3"></i>
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">	
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
-								</div>
-							</div>
-              
+							<div class=" bor15">
+							<div id="borderedAccordion">
+								<div class="accordion accordion-bordered-y accordion-stacked cl2">
+								<header id="borderedAccordion-heading-1" class="accordion-header" aria-expanded="true" aria-controls="borderedAccordion-1"
+										data-toggle="collapse"
+										data-target="#borderedAccordion-1">
+									<i class="bi bi-credit-card accordion-icon icon-text mr-3"></i>
+									<h5 class="mb-0">Payment Methods </h5>
+									<i class="accordion-control gd-angle-down icon-text ml-auto"></i>
+								</header>
 
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
+								<div id="borderedAccordion-1" class="collapse show" aria-labelledby="borderedAccordion-heading-1"
+									data-parent="#borderedAccordion">
+									<div class="accordion-body pt-0">
+									<div class="table-responsive-xl pt-0 ml-5">
+										{{!-- <table calss="table text-nowrap mb-0">	
+											<tbody>
+												<tr>										
+												<div class="mb-2">
+													<span class="border border-dark"><i class="bi bi-globe cl2 mr-2 ml-2"></i></span> <span class="stext-111 cl2 md-1 ml-1">Net Banking</span>
+												</div>
+												</tr>
+												<tr>
+												<div> <span class="border border-dark"><i class="bi bi-wallet cl2 ml-2 mr-2"></i></span> <span class="stext-111 cl2 mt-1 ml-1"> UPI</span></div>
+												</tr>
+											</tbody>
+										</table>
+ --}}
+
+
+
+										<div class="form-check mt-2">
+											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+											<label class="form-check-label pl-0" for="exampleRadios1">
+											<span class="border border cl7"><i class="bi bi-cash-stack cl2 mr-2 ml-2 mt-1"></i></span> <span class="stext-111 cl2 md-1 ml-1">Cash on delivery</span>
+											</label>
+										</div>
+										<div class="form-check mt-2">
+											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+											
+											<label class="form-check-label p-0"for="exampleRadios2">
+											<span class="border border c17"><i class="bi bi-wallet cl2 ml-2 mr-2"></i></span> <span class="stext-111 cl2 mt-1 ml-1"> UPI</span>
+											</label>
+										</div>
+										<div class="form-check mt-1">
+											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+											<div> <span class="border cl7"><i class="bi bi-paypal cl7 ml-2 mr-2"></i></span> <span class="stext-111 cl7 mt-1 ml-1">Google Wallet</span></div>
+											{{!-- <label class="form-check-label" for="exampleRadios3">
+											Disabled radio
+											</label> --}}
+										</div>
+
+
+
+
+
+
+									</div>
+									</div>
+								</div>
+								</div>
+
+								<div class="accordion accordion-bordered-y accordion-stacked cl2">
+								<header id="borderedAccordion-heading-2" class="accordion-header collapsed" aria-expanded="false" aria-controls="borderedAccordion-2"
+										data-toggle="collapse"
+										data-target="#borderedAccordion-2">
+									<i class="bi bi-plus-lg mr-3"></i>
+									<h5 class="mb-0">Add New Address</h5>
+									<i class="accordion-control gd-angle-down icon-text ml-auto"></i>
+								</header>
+
+								<div id="borderedAccordion-2" class="collapse" aria-labelledby="borderedAccordion-heading-2"
+									data-parent="#borderedAccordion">
+									<div class="accordion-body">
+										<form method="post" action="/uploadAddress" id="addressForm">
+										<div class="form-row">
+											<div class="form-group mr-2">
+											<label for="inputAddress2 ">First Name</label>
+											<input type="text" name="fname" class="form-control" id="firstName" value="{{this.firstName}}">
+											</div>
+											<div class="form-group">	
+											<label for="inputAddress2">Last Name</label>
+											<input type="text" name="lname" class="form-control" id="lastName" value="{{this.lastName}}">
+											</div>
+										</div>
+										<div class="form-group col-md-5">
+											<label for="inputEmail4">Email</label>
+											<input type="email" name="email" class="form-control" id="email" value="{{this.email}}">
+										</div>
+										<div class="form-group col-md-6 p-0">
+											<label for="inputEmail4">Phone number</label>
+											<input type="number" name="phone" class="form-control" id="phoneNumber"
+											value="{{this.phoneNumber}}">
+										</div>
+										<div class="form-group">
+											<label for="inputAddress2">Address</label>
+											<input type="text" name="address" class="form-control" id="address" value="{{this.address}}">
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-6">
+											<label for="inputCity">City</label>
+											<input type="text" name="city" class="form-control" id="city" value="{{this.city}}">
+											</div>
+											<div class="form-group col-md-4">
+											<label for="inputState">State</label>
+											{{!-- <select id="inputState" class="form-control">
+												<option selected>Choose...</option>
+												<option value="Kerala">kerala</option>
+											</select> --}}
+											<input type="text" name="state" class="form-control" id="state" value="{{this.state}}">
+											</div>
+											<div class="form-group col-md-2">
+											<label for="inputZip">Zip</label>
+											<input type="text" name="zip	" class="form-control" id="pincode" value="{{this.pincode}}">
+											</div>
+											<div class="form-group col-md-6">
+											<label for="inputCity">Landmark</label>
+											<input type="text" name="landmark" class="form-control" id="landmark" value="{{this.landmark}}">
+											</div>
+											 <button type="submit" class="btn btn-primary rounded-pill ml-auto mr-3 mt-5">Submit</button>
+										</div>
+										{{!-- <div class="form-group">
+											<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="gridCheck">
+											<label class="form-check-label" for="gridCheck">
+												Check me out
+											</label>
+											</div>
+										</div> --}}
+
+										</form>
+									</div>
+								</div>
+								</div>
+
+								<div class="accordion accordion-bordered-y accordion-stacked">
+								<header id="borderedAccordion-heading-3" class="accordion-header collapsed" aria-expanded="false" aria-controls="borderedAccordion-3"
+										data-toggle="collapse"
+										data-target="#borderedAccordion-3">
+									<i class="gd-folder accordion-icon icon-text mr-2"></i>
+									<h5 class="mb-0"></h5>
+									<i class="accordion-control gd-angle-down icon-text ml-auto"></i>
+								</header>
+
+								<div id="borderedAccordion-3" class="collapse" aria-labelledby="borderedAccordion-heading-3"
+									data-parent="#borderedAccordion">
+									<div class="accordion-body">
+									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+									</div>
+								</div>
+								</div>
 							</div>
 						</div>
             
@@ -180,17 +341,13 @@
 						</div>
 
 						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Proceed to Checkout
+							Confirm Order
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
-		
-	
-		
-
+	</form>	
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
@@ -336,14 +493,329 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</footer>
 
+	<!--=========================================== A D D   A D D R E S S  M O D A L =================================================-->
 
-	<!-- Back to top -->
+<div id="exampleModal" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true;,">
+  <div class="modal-content modal-dialog"  role="document">
+    <header class="modal-header flex-column justify-content-center border-0 mb-3 mb-xl-5 cl2">
+      <h4 id="exampleModalLabel" class="modal-title mx-auto cl2">Add New Address</h4>
+    </header>
+
+    <div class="modal-body pt-3 mb-5 mb-md-7 text-center cl2">
+      <form id="form">
+										<div class="form-row cl2">
+											<div class="form-group mr-2">
+											<label for="inputAddress2 ">First Name</label>
+											<input id="fname" type="text" name="fname" class="form-control" id="firstName" value="{{this.firstName}}">
+											</div>
+											<div class="form-group">	
+											<label for="inputAddress2">Last Name</label>
+											<input type="text" name="lname" class="form-control" id="lastName" value="{{this.lastName}}">
+											</div>
+										</div>
+										<div class="form-group col-md-5">
+											<label for="inputEmail4">Email</label>
+											<input type="email" name="email" class="form-control" id="email" value="{{this.email}}">
+										</div>
+										<div class="form-group col-md-6 p-0">
+											<label for="inputEmail4">Phone number</label>
+											<input type="number" name="phone" class="form-control" id="phoneNumber"
+											value="{{this.phoneNumber}}">
+										</div>
+										<div class="form-group">
+											<label for="inputAddress2">Address</label>
+											<input type="text" name="address" class="form-control" id="address" value="{{this.address}}">
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-6">
+											<label for="inputCity">City</label>
+											<input type="text" name="city" class="form-control" id="city" value="{{this.city}}">
+											</div>
+											<div class="form-group col-md-4">
+											<label for="inputState">State</label>
+											{{!-- <select id="inputState" class="form-control">
+												<option selected>Choose...</option>
+												<option value="Kerala">kerala</option>
+											</select> --}}
+											<input type="text" name="state" class="form-control" id="state" value="{{this.state}}">
+											</div>
+											<div class="form-group col-md-2">
+											<label for="inputZip">Zip</label>
+											<input type="text" name="zip" class="form-control" id="pincode" value="{{this.pincode}}">
+											</div>
+											<div class="form-group col-md-6">
+											<label for="inputCity">Landmark</label>
+											<input type="text" name="landmark" class="form-control" id="landmark" value="{{this.landmark}}">
+											</div>
+											 <button id="submitbtn" type="submit" onclick="uploadAddress()" class="btn btn-primary rounded-pill ml-auto mr-3 mt-5">Submit</button>
+										</div>
+										{{!-- <div class="form-group">
+											<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="gridCheck">
+											<label class="form-check-label" for="gridCheck">
+												Check me out
+											</label>
+											</div>
+										</div> --}}
+
+										</form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+	<!--=========================================== C H A N G E  A D D R E S S  M O D A L =================================================-->
+	
+<div id="changeAddress" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true;,">
+
+  <div class="modal-content modal-dialog"  role="document">
+    <header class="modal-header flex-column justify-content-center border-0 mb-3 mb-xl-5 cl2">
+      <h4 id="exampleModalLabel" class="modal-title mx-auto cl2">Select Your Delivery Address</h4>
+    </header>
+	 <button class="btn btn-primary md-3" id="	">Save Changes</button>
+    <div class="modal-body p-0 m-0 cl2">
+		{{!-- /// --}}
+{{#each address}} 
+   	<div class="card mb-2 mb-md-12 mt-4">
+					<div class="card-header d-flex align-items-center">
+						<h5 class="mtext-109 cl2 fs-6" id="test">{{this.fname}} {{this.lname}}</h5>
+						{{!-- Radio button --}}
+						 <span class=" ml-3 mt-1"><div class="form-check">
+  <input type="radio" class="form-check-input" id="radio1" name="size" value="size" checked>
+  <label class="form-check-label" for="radio1"></label>
+</div></span>
+						<div class="position-relative ml-auto">
+							<button type="button" class="btn btn-icon btn-sm" href="#" dthista-toggle="modal" data-target="#exampleModal">
+								<i class="bi bi-trash text-secondary"></i>
+							</button>
+						</div>
+
+						<div class="position-relative ml-3 ml-md-4">
+							{{!-- <button class="btn btn-primary" onclick="editAddress('{{this._id}}')" ></button> --}}
+							<button onclick="editAddress('{{this._id}}')"  class="btn btn-icon btn-sm" href="#" data-toggle="modal" data-target="#editModal">
+								<i class="bi bi-pencil-square text-secondary"></i>
+							</button>
+						</div>
+					</div>
+					<div class="card-body pt-0">
+						<div class="flex-w flex-m m-r-150 m-tb-5">
+						
+  					
+					<div class="addressStrip-base-title">
+						<button type="radio"></button> 
+					
+						<div class="addressStrip-base-addressName stext-111 cl2 p-t-2">
+							Deliver to: <span class="ml-1 addressStrip-base-highlight stext-111 cl6 p-t-2">
+							{{this.fname}} {{this.lname}} {{this.email}}
+							{{this.phone}} {{this.city}} {{this.landmark}}
+							</span>
+							<div class="addressStrip-base-highlight stext-111 cl6 p-t-2">
+								{{this.Zip}}
+							</div>
+						</div>
+						<div class="addressStrip-base-subText stext-111 cl6 p-t-2">
+								{{this.address}}
+						</div>
+					</div>
+					<div class="flex-c-m ">
+								</div>
+								</div> 
+
+		</div>
+    </div>	
+
+
+{{/each}}
+       
+
+    <p id="output"></p>
+    </div>
+  </div>
+</div>
+
+
+	<!--=========================================== E D I T   A D D R E S S  M O D A L =================================================-->
+
+<div id="editModal" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true;,">
+  <div class="modal-content modal-dialog"  role="document">
+    <header class="modal-header flex-column justify-content-center border-0 mb-3 mb-xl-5 cl2">
+      <h4 id="exampleModalLabel" class="modal-title mx-auto cl2">Edit Address Address</h4>
+    </header>
+
+    <div class="modal-body pt-3 mb-5 mb-md-7 text-center cl2">
+      <form id="form">
+										<div class="form-row cl2">
+											<div class="form-group mr-2">
+												<label for="inputAddress2 ">First Name</label>
+												<input id="efname" type="text" class="form-control" name="fname">
+											</div>
+
+											<div class="form-group">	
+												<label for="inputAddress2">Last Name</label>
+												<input id="elname" type="text" class="form-control" name="lname">
+											</div>
+										</div>
+										<div class="form-row cl2">
+										<div class="form-group mr-2">
+											<label for="inputEmail4">Email</label>
+											<input id="eemail" type="text" class="form-control" name="email">
+										</div>
+										<div class="form-group">
+											<label for="inputEmail4">Phone number</label>
+											<input id="ephone" type="text" class="form-control" name="phone">
+										</div>
+										</div>
+										<div class="form-group">
+											<label for="inputAddress2">Address</label>
+											<textarea id="eaddress" class="form-control" aria-label="With textarea" name="address"></textarea>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-6">
+											<label for="inputCity">City</label>
+											<input id="ecity" type="text" class="form-control" name="city">
+											</div>
+											<div class="form-group col-md-4">
+											<label for="inputState">State</label>
+											<input id="estate" type="text" class="form-control" name="state">
+											</div>
+											<div class="form-group col-md-2">
+											<label for="inputZip">Zip</label>
+											<input id="ezip" type="text" class="form-control" name="zip">
+											</div>
+											<div class="form-group col-md-6">
+											<label for="inputCity">Landmark</label>
+											<input id="elandmark" type="text" class="form-control" name="landmark">
+											</div>
+											 <button id="submitbtn" type="submit" onclick="uploadAddress()" class="btn btn-primary rounded-pill ml-auto mr-3 mt-5">Submit</button>
+										</div>
+										{{!-- <div class="form-group">
+											<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="gridCheck">
+											<label class="form-check-label" for="gridCheck">
+												Check me out
+											</label>
+											</div>
+										</div> --}}
+
+										</form>
+    </div>
+  </div>
+</div>
+
+<script>
+	console.log('ethi')
+	function editAddress(id){
+		
+		const formFname = document.getElementById('efname')
+		const formLname = document.getElementById('elname')
+		const formEmail = document.getElementById('eemail')
+		const formPhone = document.getElementById('ephone')
+		const formAddress = document.getElementById('eaddress')
+		const formCity = document.getElementById('ecity')
+		const formState = document.getElementById('estate')
+		const formZip = document.getElementById('ezip')
+		const formLandmark = document.getElementById('elandmark')
+
+		axios({
+			method:'post',
+			url:'/current-address',
+			data:{
+				currentAddress:id
+			}
+		}).then((e)=>{
+			let addressData = e.data.data
+			let fname = addressData.fname
+			let lname = addressData.lname
+			let email = addressData.email
+			let phone = addressData.phone
+			let address = addressData.address
+			let city = addressData.city
+			let state = addressData.state
+			let zip = addressData.zip
+			console.log('zippp:',zip)
+			let landmark = addressData.landmark
+			
+
+
+			console.log('++',fname)
+			console.log('this is response',e.data.data)
+			
+			formFname.value = fname
+			formLname.value = lname
+			formEmail.value = email
+			formPhone.value = phone
+			formAddress.value = address
+			formCity.value = city
+			formState.value = state
+			formZip.value = zip
+			formLandmark.value = landmark
+	
+
+		})
+	}
+</script>
+
+
+{{! _____________________________________________________________________________________________________________________________________________________________________ --}}
+
 	<div class="btn-back-to-top" id="myBtn">
 		<span class="symbol-btn-back-to-top">
 			<i class="zmdi zmdi-chevron-up"></i>
 		</span>
 	</div>
-
+	<script>$('#myModal').modal(options)</script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-		<script>
+	
+	<script>
+			const form = document.getElementById('form');
+			
+			form.addEventListener('submit',(e)=>{
+				e.preventDefault();
+				const formData = new FormData(form);
+				const payload = Object.fromEntries(formData)
+				console.log('formmmmmmm:',payload)
+				
+			axios({
+					method:'post',
+					url:'/uploadAddress',
+			
+					data:{	
+						payload
+					}
+				})
+			.then( (e) => {	
+        Swal.fire({
+			showConfirmButton: false,
+			icon:'success',
+          title: 'Address added',      
+        })
+		const fetcthedAddress = e.data.data.addresses
+		console.log('fetcthedAddress',fetcthedAddress)
+	})
+			.catch(error => console.log(error))
+			}) 
+  </script>
+
+<script>
+//=========================================== R A D I O  B U T T O N  C H E C K ==============================================
+const btn = document.querySelector('#btn');        
+        const radioButtons = document.querySelectorAll('input[name="size"]');
+        btn.addEventListener("click", () => {
+            let selectedSize;
+            for (const radioButton of radioButtons) {
+                if (radioButton.checked) {
+                    selectedSize = radioButton.value;
+                    break;
+                }
+            }
+            // show the output:
+            output.innerText = selectedSize ? `You selected ${selectedSize}` : `You haven't selected any size`;
+        });
+
+	cosnt chekedRadio = 
+
+</script>
+	

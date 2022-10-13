@@ -81,6 +81,7 @@ exports.loginSubmit = async (req, res, next) => {
     });
      //4) check user varified OTP
     //  res.status(200).cookie('jwt',token).redirect('/')
+
      const otpVerify = user.IsOtpVerified;
      console.log('otpVerify:',otpVerify)
      if(otpVerify==false){
@@ -158,7 +159,7 @@ const client = require('twilio')(accountSID,authToken);
 
 exports.otpRoute = async (req,res,next)=>{
   
-  const user = await utils.getUser(req);
+  const user = await utils.getUser(req);  
   const phone = user.phone
 
   await client.verify
@@ -182,7 +183,7 @@ exports.otpVerify = async(req,res,next) =>{
   .verificationChecks
   .create({
     to:`+91${phone}`,
-    code: otp ,
+    code: otp,
   })
   .then(resp => {
     

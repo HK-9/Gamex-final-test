@@ -59,15 +59,25 @@ exports.productsRoute = async (req,res,next) => {
    req.body.image = imageArray
    console.log("image>>>>>>>",files)
     try {
-    const newProductModel = await ProductsModel.create(req.body)
+      let originalPrice = req.body.price
+      let discount = req.body.discount
+      let discountPrice = originalPrice - (originalPrice * discount / 100)
+     console.log("originalPrice",originalPrice)
+     console.log("dicount",discount)
+     console.log('discountPrice:',discountPrice)
+     let productData = req.body;
+     Object.assign(productData,{discountPrice:discountPrice})
+     console.log("productData",productData)
+    const newProductModel = await ProductsModel.create(productData)
     res.status(200).json({
       status:'sucess',
       data:newProductModel
     })
+    
     } catch(error){
       console.log(error)
       res.status(401).json({
-        status:'failed',
+        error
         
       })  
     }

@@ -12,7 +12,10 @@ const productsSchema = mongoose.Schema({
     },
     discount:{
         type: Number 
-    },  
+    }, 
+    discountPrice:{
+        type: Number
+    },
     stock:{
         type: Number
     },

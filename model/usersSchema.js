@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema({
   conpassword: {
     type: String,
   },
+  addresses:[
+    {
+    address:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "address"
+    }
+  }
+  ],
   date:{
    type:Date,
    default: Date.now 
@@ -39,7 +47,7 @@ const userSchema = new mongoose.Schema({
 
 
 },{timestamps:true});
-//  userSchema.plugin(uniqueValidator);
+ userSchema.plugin(uniqueValidator);
 
 //Only run if the password modified
 userSchema.pre("save", async function (next) {

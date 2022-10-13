@@ -14,12 +14,11 @@ const userId = utils.get
    const user = await utils.getUser(req)
     const cartData = await utils.cartDetails(user._id)
     const cart = CartModel.find().lean()
-   
     res.render("users/cart",{
         cart,
         cartData,
         userLoggedIn:logged,
-        layout:'tempLayout'
+        layout:'tempLayout',user
     });
   };
 
@@ -27,8 +26,7 @@ const userId = utils.get
 //============================ U P L O A D  C A R T ===============================
 
 exports.uploadCartRoute = async (req,res,next)=>{
-//   try{
-  
+  try{
   const user = await utils.getUser(req)
   let count = req.body.quantity
   let numProduct = req.body.numProduct
@@ -62,11 +60,11 @@ exports.uploadCartRoute = async (req,res,next)=>{
     }
 
     else {
-        console.log("first else if condition-If products not exists");
+        console.log("first else if condition-If products not exists");`1`
         await CartModel.findOneAndUpdate({ userId: user }, {
             $push: {
                 products: {
-                    product: productId, quantity: value,
+                    product: produxctId, quantity: value,
                     total: total
                 },
             }
@@ -76,10 +74,10 @@ exports.uploadCartRoute = async (req,res,next)=>{
 
 
 } else {
-  console.log('else condition')
+  console.log('else condition22')
 
     await CartModel.create({
-        userId: user,
+        userId: userId,
         products: { product: productId, quantity: value, total: total },
         quantity:value
     })
@@ -87,13 +85,13 @@ exports.uploadCartRoute = async (req,res,next)=>{
 
 // cartData = await CartModel.find().populate('products.product').lean()
 
-res.status(200).json({ message: "Hurray! Product Added"}).redirect
+res.status(200).json({ message: "Hurray! Product Added"})
 
-// } catch (error) {
+} catch (error) {
 
-// res.status(401).json({ message: "Oops! Process failed", error: `error is : ${error}` })
+res.status(401).json({ message: "Oops! Process failed", error: `error is : ${error}` })
 
-// }
+}
 
 }
 
@@ -107,11 +105,7 @@ exports.updateQty = async (req,res,next) => {
   let count = req.body.quantity
   const product = await ProductsModel.findById(productId);
   let price = product.price
-  
   let cart = await CartModel.findOne({userId:userId}).lean()
-  let GetFinalTotal = cart.products[0].total
-  
-  
   let total = price*count
     //increment quantity
   const updateQty = await CartModel.updateOne({userId:userId,'products.product':productId},
@@ -136,16 +130,27 @@ exports.updateQty = async (req,res,next) => {
 //===============================-G R A N D  P R O D U C T  P R I C E-====================================
 
 exports.getProductGrandTotal = async (req,res,next)  => {
-  const user = await utils.getUser(req)
-  const userId = user._id 
-    let productGrandTotal = await utils.getProductsGrandTotal(userId);
-    console.log('GRAND TOTAL :---------------------------------- ',productGrandTotal);
-    return res.json({
-      status:'success',
-      message:'ethi',
-       price: productGrandTotal
-    })
+  
+  try {
+    const user = await utils.getUser(req)
+    console.log('user:',user);
+     const userId = user._id 
+       let productGrandTotal = await utils.getProductsGrandTotal(userId);
+       const cartData = await CartModel.findOne({userId}).populate('products.product').lean()
+       let products = cartData.products;
+       console.log('xxxxxxxxxxxxxxxxx',products[0].total)
+       console.log('GRAND TOTAL :---------------------------------- ',productGrandTotal);
+       return res.json({
+         status:'success',
+         message:'ethi',
+          price: productGrandTotal
+       })
+  } catch (error) {
+    res.render('/login')
+  }
+
  
+
 }
 
 //===============================--D E L E T E  C A R T   I T E M-====================================

@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
     }
   }
   ],
+  couponId:{
+    type:String
+  },
   date:{
    type:Date,
    default: Date.now 
@@ -41,6 +44,9 @@ const userSchema = new mongoose.Schema({
     default:true
   },
   IsOtpVerified:{
+    type:Boolean,
+    default:false
+  },isCouponUsed:{
     type:Boolean,
     default:false
   }

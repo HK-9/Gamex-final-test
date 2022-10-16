@@ -30,7 +30,12 @@ const addressSchema = new mongoose.Schema({
     },
     landmark:{
         type:String
-    }
+    },
+    isActive:{
+        type:Boolean,
+        default:false
+      }
+    
 })
 const AddressModel = mongoose.model('address',addressSchema);
 module.exports = AddressModel

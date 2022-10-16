@@ -14,6 +14,7 @@ const userId = utils.get
    const user = await utils.getUser(req)
     const cartData = await utils.cartDetails(user._id)
     const cart = CartModel.find().lean()
+    
     res.render("users/cart",{
         cart,
         cartData,
@@ -85,7 +86,7 @@ exports.uploadCartRoute = async (req,res,next)=>{
 
 // cartData = await CartModel.find().populate('products.product').lean()
 
-res.status(200).json({ message: "Hurray! Product Added"})
+res.status(200).redirect('/cart')
 
 } catch (error) {
 

@@ -5,7 +5,9 @@ const cartController = require('../controllers/cartController');
 const checkoutController = require('../controllers/checkoutController');
 const whishlistController = require('../controllers/whishlistController');
 const myAccountController = require('../controllers/myAccoutController');
+const couponController = require('../controllers/admin/couponController')
 const { route } = require("./admin");
+const CouponModel = require("../model/couponSchema");
 var router = express.Router();
 
 
@@ -23,6 +25,8 @@ router.get("/product_detail/:id",authController.protect,userController.productDe
 router.get("/otp",authController.otpRoute)
 router.get("/whishlist",whishlistController.whishlistRoute)
 router.get("/myProfile",myAccountController.myAccoutRoute)
+router.get('/manage-address',myAccountController.manageAddressRoute)
+
 
 router.get('/test',userController.testRoute)
 
@@ -45,6 +49,15 @@ router.post('/remove-whishlist',whishlistController.removeWishlistRoute)
 router.post('/push-to-cart',whishlistController.pushCartRoute)
 router.post('/uploadAddress',checkoutController.uploadAddress)
 router.post('/current-address',myAccountController.getCurrentAddressRoute)
+router.post('/delete-address',myAccountController.deleteAddressRoute)
+router.post('/edit-address',myAccountController.editAddressRoute)
+router.post('/checked-address',myAccountController.findCheckedAddressRoute)
+router.post('/redeem-coupon',couponController.redeemCouponRoute)
+
+
+
+
+
 
 
 module.exports = router;

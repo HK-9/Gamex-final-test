@@ -25,12 +25,12 @@ exports.ordersRoute = (req, res, next) => {
   res.render("admin/dashboard/orders", { admin: true, layout: "adminLayout" });
 };
 
-exports.couponsRoute = (req, res, next) => {
-  res.render("admin/dashboard/  coupons", {
-    admin: true,
-    layout: "adminLayout",
-  });
-};
+// exports.couponsRoute = (req, res, next) => {
+//   res.render("admin/dashboard/coupons", {
+//     admin: true,
+//     layout: "adminLayout",
+//   });
+// };
 //----------------------USER BLOCK/UNBLOCK--------------------------------
 exports.blockUserRoute = async (req, res, next) => {
   try {

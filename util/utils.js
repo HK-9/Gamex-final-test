@@ -3,6 +3,7 @@ const UsersModel = require("../model/usersSchema");
 const ProductsModel = require('../model/productsSchema');
 const CartModel = require('../model/cartSchenma');
 const WhishlistModel = require('../model/whishlistSchema');
+const CouponModel = require('../model/couponSchema');
 
 utils = {
     getUser: async function (req) {
@@ -15,7 +16,7 @@ utils = {
 
         
       } catch (error) {
-        console.log('USER NOT LOGGED IN',error)
+        // console.log('USER NOT LOGGED IN',error)
       }
         
     },
@@ -59,14 +60,29 @@ utils = {
   getCartDataNotify: async (userId)=>{
     const cartData = await CartModel.findOne({userId}).populate('products.product').lean()
     const dataNotifyCount = cartData.products.length; 
-    console.log('hai',dataNotifyCount)
+    // console.log('hai',dataNotifyCount)
     return dataNotifyCount;
   },
   getUserAddress: async(userId) => {
-    const userAddressData = await UsersModel.findOne({_id:userId}).populate('addresses.address').lean()
-     console.log('populatedAddress',userAddressData)
-    return userAddressData;
-  } 
+    // const userAddressData = await UsersModel.findOne({_id:userId}).populate('addresses.address').lean()
+    // //  console.log('populatedAddress',userAddressData)
+    // return userAddressData;
+  },
+  getCouponOffer: async(userId) => { //populated method 
+    const user = await UsersModel.findById(userId)
+    const couponId = user.couponId;
+    const couponData = await CouponModel.findById(couponId)
+    const couponOffer = couponData.offer
+    console.log('couponData:::',couponOffer)
+    return couponOffer
+  },
+  isCouponUsed: async(userId) =>{
+    const userData = await UsersModel.findById(userId).lean()
+    const couponUsed = userData.isCouponUsed;
+    return couponUsed
+  }
+  // getCouponDiscount: async() 
+
 
 
 }

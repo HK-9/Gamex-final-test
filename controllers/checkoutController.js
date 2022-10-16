@@ -1,36 +1,70 @@
 const ProductsModel = require('../model/productsSchema');
 const AddressModel = require('../model/addressSchema')
 const CartModel = require('../model/cartSchenma');
-const UsersModel = require('../model/usersSchema')
+const UsersModel = require('../model/usersSchema');
+const CouponModel = require('../model/couponSchema')
 const utils = require('../util/utils'); 
 
 
 //============================-V I E W   C H E C K O U T-===============================
-
 exports.checkoutRoute = async (req, res, next) => {
-
+    
     const logged = await utils.partialCheck(req)
     const user = await utils.getUser(req)
+    const userData = user
     const userId = user._id
-    const addressExist = await user.addresses;
-    
-    if(addressExist.length === 0){
+    const addressNotExist = await user.addresses;
+    if(addressNotExist.length === 0){
         res.render("users/checkout",{
             userLoggedIn:logged,
-            layout:'tempLayout'
+            layout:'tempLayout',userData
         });
-    }else{
-        address = await AddressModel.find({userId:userId}).lean()
-    // const  uniqueUserAddressData = await utils.getUserAddress(user.id);
+        return
+    }
+    address = await AddressModel.find({userId:userId}).lean()
+
     const uniqueUserAddressData = await UsersModel.findOne({_id:userId}).populate('addresses.address').lean()
+    const activeAddressData = await AddressModel.findOne({userId:userId ,isActive:true}).lean()
+    const cartData = await utils.cartDetails(userId)
     console.log('uniqueUserAddressData',uniqueUserAddressData)
+    const couponUsed = user.isCouponUsed;
+    const couponData = await CouponModel.find().lean()
+    const ProductsGrandTotal = await utils.getProductsGrandTotal(userId)
+   
+
+     if (couponUsed){
+        if(couponUsed === true){
+            const couponOffer = await utils.getCouponOffer(userId);
+            console.log('ProductsGrandTotal',ProductsGrandTotal);
+           const couponDiscountPrice =  ProductsGrandTotal - (ProductsGrandTotal * couponOffer/100);
+           
+           
+           await CartModel.updateOne({userId},{grandTotal:couponDiscountPrice})
+           let couponDiscountedTotal = cartData.grandTotal
+            couponDiscountedTotal = ProductsGrandTotal - couponDiscountedTotal
+            const finalTotal = cartData.grandTotal
+           console.log('coupoon:',couponDiscountedTotal)
+           
+            res.render("users/checkout",{
+                userLoggedIn:logged,
+                layout:'tempLayout',
+                uniqueUserAddressData,address,activeAddressData,cartData,
+                couponUsed,
+                couponData,
+                couponDiscountedTotal,
+                finalTotal,couponOffer
+
+            });
+        }
+        return
+        }
     res.render("users/checkout",{
         userLoggedIn:logged,
         layout:'tempLayout',
-        uniqueUserAddressData,address
+        uniqueUserAddressData,address,activeAddressData,cartData,
+        couponData,
     });
-    }
-  };
+}
 
 //============================ U P L O A D  A D D R E S S ===============================
 
@@ -84,7 +118,7 @@ exports.checkoutRoute = async (req, res, next) => {
             },
         }
     })
-
+    await AddressModel.findOneAndUpdate({_id:addressId}, { isActive:true})
     //   const  uniqueUserAddressData = await utils.getUserAddress(user.id) 
       const uniqueUserAddressData = await UsersModel.findOne({userId}).populate('addresses.address').lean();
                               
@@ -103,3 +137,4 @@ exports.checkoutRoute = async (req, res, next) => {
     
     
 }
+

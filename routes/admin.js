@@ -40,12 +40,14 @@ router.post('/uploadProduct',upload.array('image',4),productsController.uploadPr
 router.get("/", adminController.loginRoute);
 router.get('/deleteProduct/:id',upload.array('image',4),productsController.deleteProduct);
 router.post('/edit_category/:id',categoryController.editedCategoryRoute);
+router.post('/editStatusButton/:id',adminController.editStatusButton);
 // router.post('/edited_category',categoryController.editedCategoryRoute);
 router.get('/delete_category/:id',categoryController.delete_category);
 router.get('/add_category',categoryController.addCategoryRoute);
 router.post('/upload_category',categoryController.uploadCategoryRoute);
 router.post('/editProduct/:id',upload.array('image',4),productsController.editProduct)
 router.post('/submit-coupon',couponsController.submitCouponRoute)
-   
+router.get('/editOrderStatus/:id',adminController.ordersEditRoute)
+router.post('/editStatusButton/:id',adminController.editStatusButton);
 
 module.exports = router;

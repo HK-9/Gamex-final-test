@@ -4,11 +4,14 @@ const CartModel = require('../model/cartSchenma');
 const UsersModel = require('../model/usersSchema');
 const CouponModel = require('../model/couponSchema')
 const utils = require('../util/utils'); 
+const CategoryModel = require('../model/categorySchema');
 
+const OrderModel = require ('../model/orderSchema')
 
 //============================-V I E W   C H E C K O U T-===============================
 exports.checkoutRoute = async (req, res, next) => {
-    
+    const product = await utils.getProduct(req)
+
     const logged = await utils.partialCheck(req)
     const user = await utils.getUser(req)
     const userData = user
@@ -26,25 +29,36 @@ exports.checkoutRoute = async (req, res, next) => {
     const uniqueUserAddressData = await UsersModel.findOne({_id:userId}).populate('addresses.address').lean()
     const activeAddressData = await AddressModel.findOne({userId:userId ,isActive:true}).lean()
     const cartData = await utils.cartDetails(userId)
-    console.log('uniqueUserAddressData',uniqueUserAddressData)
     const couponUsed = user.isCouponUsed;
     const couponData = await CouponModel.find().lean()
     const ProductsGrandTotal = await utils.getProductsGrandTotal(userId)
-   
+    const subTotal = cartData.subTotal
 
-     if (couponUsed){
         if(couponUsed === true){
             const couponOffer = await utils.getCouponOffer(userId);
-            console.log('ProductsGrandTotal',ProductsGrandTotal);
-           const couponDiscountPrice =  ProductsGrandTotal - (ProductsGrandTotal * couponOffer/100);
+            console.log('ProductsGrandTotal');
+           const couponDiscountPrice =  subTotal - (subTotal * couponOffer/100);
            
-           
+        
            await CartModel.updateOne({userId},{grandTotal:couponDiscountPrice})
+           
            let couponDiscountedTotal = cartData.grandTotal
-            couponDiscountedTotal = ProductsGrandTotal - couponDiscountedTotal
+                couponDiscountedTotal = subTotal - couponDiscountedTotal
+            
             const finalTotal = cartData.grandTotal
            console.log('coupoon:',couponDiscountedTotal)
-           
+              
+           // pushing discount price into cartdata.products *access-> {{#each cartData}} {{this.couponDiscount}}
+            
+           await CartModel.findOneAndUpdate({ userId: user }, {
+        
+                    couponDiscount: couponDiscountedTotal,
+                    totalPayed:finalTotal,
+                    subTotal:subTotal
+        
+        })
+    
+
             res.render("users/checkout",{
                 userLoggedIn:logged,
                 layout:'tempLayout',
@@ -55,15 +69,15 @@ exports.checkoutRoute = async (req, res, next) => {
                 finalTotal,couponOffer
 
             });
+            return
         }
-        return
-        }
-    res.render("users/checkout",{
-        userLoggedIn:logged,
-        layout:'tempLayout',
-        uniqueUserAddressData,address,activeAddressData,cartData,
-        couponData,
-    });
+
+        res.render("users/checkout",{
+            userLoggedIn:logged,
+            layout:'tempLayout',
+            uniqueUserAddressData,address,activeAddressData,cartData,
+            couponData,
+        });
 }
 
 //============================ U P L O A D  A D D R E S S ===============================
@@ -105,6 +119,7 @@ exports.checkoutRoute = async (req, res, next) => {
         landmark:landmark
     })
 
+
    const addressData = await AddressModel.find({userId:userId},{_id:1}).lean()
     const addressLen = addressData.length;
     const addressId = addressData[addressLen-1]
@@ -118,10 +133,12 @@ exports.checkoutRoute = async (req, res, next) => {
             },
         }
     })
+    if(addressLen <= 1){
     await AddressModel.findOneAndUpdate({_id:addressId}, { isActive:true})
+    }
     //   const  uniqueUserAddressData = await utils.getUserAddress(user.id) 
       const uniqueUserAddressData = await UsersModel.findOne({userId}).populate('addresses.address').lean();
-                              
+                           
 
     res.status(200).json({
         status:'success',

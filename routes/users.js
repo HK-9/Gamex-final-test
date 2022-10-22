@@ -8,6 +8,8 @@ const myAccountController = require('../controllers/myAccoutController');
 const couponController = require('../controllers/admin/couponController')
 const { route } = require("./admin");
 const CouponModel = require("../model/couponSchema");
+// const { ordersRoute } = require("../controllers/admin/adminController");
+const orderController = require('../controllers/orderContoller')
 var router = express.Router();
 
 
@@ -26,7 +28,8 @@ router.get("/otp",authController.otpRoute)
 router.get("/whishlist",whishlistController.whishlistRoute)
 router.get("/myProfile",myAccountController.myAccoutRoute)
 router.get('/manage-address',myAccountController.manageAddressRoute)
-
+router.get('/render-cod',orderController.renderCodRoute)
+router.get('/render-stripe',orderController.renderStripeRoute)
 
 router.get('/test',userController.testRoute)
 
@@ -53,6 +56,7 @@ router.post('/delete-address',myAccountController.deleteAddressRoute)
 router.post('/edit-address',myAccountController.editAddressRoute)
 router.post('/checked-address',myAccountController.findCheckedAddressRoute)
 router.post('/redeem-coupon',couponController.redeemCouponRoute)
+router.post('/payment',orderController.confirmOrderRoute)
 
 
 

@@ -8,17 +8,37 @@ const cartSchema = new mongoose.Schema({
     grandTotal: {
       type: Number
     },
+    discount:{
+      type:Number
+    },
+    totalPayed:{
+      type:Number
+    },subTotal:{
+      type:Number
+    },
+    couponDiscount:{
+      type:Number 
+    },
     products: [
       {
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "products"
         },
-        quantity: {
+        quantity: { 
           type: Number,
         },
-        total: {
+        total: {  //remove
           type: Number,
+        },
+        subTotal:{ 
+          type:Number     //total sum of all products combined if no coupon
+        },
+        totalPaid:{
+          type:Number     //total sum of all products, substracted from subtotal if couopon applied
+        },
+        couponDiscount:{
+          type:Number
         },
       },
     ],

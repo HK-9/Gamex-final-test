@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const stripe = require('stripe')
 const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'})
 const createError = require('http-errors');
@@ -13,7 +14,6 @@ const AppError = require('./util/AppError')
 const adminRouter = require('./routes/admin');
 const usersRouter = require('./routes/users');
 const server = require('./server')
-
 const app = express();
 
 // view engine setup

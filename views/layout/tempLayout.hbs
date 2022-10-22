@@ -5,10 +5,11 @@
     Document Title
     ============================================= GRAINS TEMPLATE ===================================================
     -->
+	<script src="https://js.stripe.com/v3/"></script>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+	 
 		    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <base href="" target="_self">
     <!-- Title -->
@@ -182,6 +183,8 @@
 		{{>admin-header}}
 		{{else if userLoggedIn}}
 		{{>users-header}}
+		{{else if noHeader}}
+		{{NULL}}
 		{{else}}
 		{{>guestUsers-header}}
 		{{/if}}
@@ -314,7 +317,7 @@
 					url:'/getProductGrandTotal',
 				}).then((res) => {
 					let dbGrandTotal = res.data.price
-					let grandTotal = document.getElementById('grandTotal')
+					let grandTotal = document.getElementById('grandTotal');
 					   	grandTotal.innerHTML= dbGrandTotal
 						console.log('GRAND TOTTAL.DATA',dbGrandTotal);
 				})

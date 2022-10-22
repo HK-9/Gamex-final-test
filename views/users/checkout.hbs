@@ -112,21 +112,21 @@
 									<div class="accordion-body pt-0">
 									<div class="table-responsive-xl pt-0 ml-5">
 										<div class="form-check mt-2">
-											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+											<input class="form-check-input" type="radio" name="payment" id="exampleRadios1" value="cod" checked>
 											<label class="form-check-label pl-0" for="exampleRadios1">
 											<span class="border border cl7"><i class="bi bi-cash-stack cl2 mr-2 ml-2 mt-1"></i></span> <span class="stext-111 cl2 md-1 ml-1">Cash on delivery</span>
 											</label>
 										</div>
 										<div class="form-check mt-2">
-											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+											<input class="form-check-input" type="radio" name="payment" id="exampleRadios2" value="creditCard">
 											
 											<label class="form-check-label p-0"for="exampleRadios2">
-											<span class="border border c17"><i class="bi bi-wallet cl2 ml-2 mr-2"></i></span> <span class="stext-111 cl2 mt-1 ml-1"> UPI</span>
+											<span class="border border c17"><i class="bi bi-credit-card cl2 ml-2 mr-2"></i></span> <span class="stext-111 cl2 mt-1 ml-1"> Credit Card</span>
 											</label>
 										</div>
 										<div class="form-check mt-1">
 											<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-											<div> <span class="border cl7"><i class="bi bi-paypal cl7 ml-2 mr-2"></i></span> <span class="stext-111 cl7 mt-1 ml-1">Google Wallet</span></div>
+											<div> <span class="border cl7"><i class="bi bi-google cl7 ml-2 mr-2"></i></span> <span class="stext-111 cl7 mt-1 ml-1">Google Wallet</span></div>
 											{{!-- <label class="form-check-label" for="exampleRadios3">
 											Disabled radio
 											</label> --}}
@@ -192,12 +192,12 @@
 							</s>
 						</div>
 						<div class="flex-w flex-t bor12 p-b-13">
-							 <small id="emailHelp" class="form-text text-muted">%{{couponOffer}} Discount applied.</small>
+							 <small id="emailHelp" class="form-text text-muted"><span style="color:rgb(192, 166, 0) ;" >%{{couponOffer}} Discount applied.</span></small>
 						</div>
 						
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208 cl2">
-								 <span class="stext-110">
+								 <span class="stext-110 ">
 									Coupon Discount: 
 								</span>
 							</div>
@@ -259,9 +259,12 @@
 							</div>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" onclick="confirmOrder()">
+						{{!-- <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04" onclick="confirmOrder()">
 							Confirm Order
-						</button>
+						</button> --}}
+							<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 m-tb-5" onclick="confirmOrder()">
+									Confirm Order
+								</div> 
 					</div>
 				</div>
 				{{else}}
@@ -326,18 +329,19 @@
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
-									Total: 
+									Total:  
 								</span>
 							</div>
 
 							<div class="size-209 p-t-1">
+								<span class="mtext-110 cl2">₹ {{#each cartdata}}{{this.subTotal}}{{/each}}</span><span id="grandTotal" class="mtext-110 cl2">
 								<span id="grandTotal" class="mtext-110 cl2">
-									<i class="bi bi-tools btn-outline-warning fs-3"></i>
+
 								</span>
 							</div>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" onclick=confirmOrder()>
 							Confirm Order
 						</button>
 					</div>
@@ -576,7 +580,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</header>
 		<div class="d-flex justify-content-center p-0">
 			<button class=" mr-1 btn btn-primary flex-c-m stext-101 cl2 size-115 bg8 hov-btn3 p-lr-15 trans-04" id="btn">Save Changes</button>
-		<a href="/manage-address"><button class=" ml-1 btn btn-danger flex-c-m stext-101 cl2 size-115 bg8  hov-btn3 p-lr-15 trans-04  mr-1 "> Manage Address </button></a>
+		<a class=" ml-1 btn btn-danger flex-c-m stext-101 cl2 size-115 bg8  hov-btn3 p-lr-15 trans-04  mr-1 " href="/manage-address" role="button">Manage address</a>
 		</div>
 
 		<div class="modal-body p-0 m-0 cl2">
@@ -598,9 +602,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 							<div class="position-relative ml-3 ml-md-4">
 								{{!-- <button class="btn btn-primary" onclick="editAddress('{{this._id}}')" ></button> --}}
-								<button onclick="editAddress('{{this._id}}')"  class="btn btn-icon btn-sm" href="#" data-toggle="modal" data-target="#editModal">
-									<i class="bi bi-pencil-square text-secondary"></i>
-								</button>
+								
+								</button><a onclick="editAddress('{{this._id}}')" class="btn btn-icon btn-sm" href="#" role="button" data-toggle="modal" data-target="#editModal"><i class="bi bi-pencil-square text-secondary"></i></a>
 							</div>
 						</div>
 						<div class="card-body pt-0">
@@ -906,7 +909,7 @@ const btn = document.querySelector('#btn');
 
 <script>
 		//======================= R E D E E M   C O U P O N =============================
-		function redeem(id){
+		function redeem(id,grandTotal){
 			console.log('yes there button clicked')
 			axios({
 				method:'post',
@@ -939,9 +942,43 @@ const btn = document.querySelector('#btn');
 	</script>
 
 	<script>
+
 	//======================= C O N F I R M   O R D E R =============================
-	
-	function confirmOrder() {
+
+	let paymentBtns = document.querySelectorAll("input[name='payment']");
+	let selectedPaymentMethod
+	let findSelected = () => { 
+			 selectedPaymentMethod = document.querySelector
+			("input[name='payment']:checked").value;
+			console.log("selectedPaymentMethod:",selectedPaymentMethod)
+		}
+
+	paymentBtns.forEach(radioBtn => {
+  
+		radioBtn.addEventListener("change",findSelected);
 		
+		return selectedPaymentMethod
+	})
+
+
+	function confirmOrder() {
+	console.log('inside botton click')
+		axios({
+				method:'post',
+				url:'/payment',	
+				data:{
+					payment:selectedPaymentMethod,
+
+				}
+			}).then((e) => {
+			    const  payment =  e.data.data.payment
+				console.log('response is',e)
+				if (payment == 'cod'){
+				location.replace('/render-cod')
+				}else{
+					location.replace('/render-stripe')
+				}
+				
+			})
 	 }
 	</script>

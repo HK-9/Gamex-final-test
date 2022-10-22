@@ -24,13 +24,13 @@
 										</div>
 									</td>
 									<td class="column-2">{{this.product.title}}</td>
-									<td class="column-3">₹{{this.product.price}}</td>
+									<td class="column-3">₹ {{this.product.discountPrice}}</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"  onclick="incrementQty('{{this.product._id}}',0);grandTotal();">
 													<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
-											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="numProduct"  >
+											<input id="increment{{this.product._id}}" value="{{this.quantity}}" class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="numProduct" disabled>
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onclick="incrementQty('{{this.product._id}}',1);grandTotal();">
 												{{!-- <a onclick="increment(`{{this.product._id}}`)" id="increment"</a> --}}
@@ -138,10 +138,10 @@
 							</div>
 						</div>
 						
-						<a href="/checkout">
-							<a href="/checkout" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 btn  btn-lg active" role="button" aria-pressed="true">Proceed to Checkout</a>
+						
+							<a onclick="" href="/checkout" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 btn  btn-lg active" role="button" aria-pressed="true">Proceed to Checkout</a>
 							
-						</a>
+						
 					</div>
 				</div>
 			</div>

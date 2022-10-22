@@ -35,7 +35,7 @@ exports.uploadCartRoute = async (req,res,next)=>{
   const userId = user.id;
   const value = JSON.parse(JSON.stringify(req.body.numProduct));
   const product = await ProductsModel.findById(productId);
-  const productPrice = product.price;
+  const productPrice = product.discountPrice;
   const total = numProduct*productPrice;
   
 
@@ -61,11 +61,12 @@ exports.uploadCartRoute = async (req,res,next)=>{
     }
 
     else {
-        console.log("first else if condition-If products not exists");`1`
+        console.log("first else if condition-If products not exists");
         await CartModel.findOneAndUpdate({ userId: user }, {
             $push: {
                 products: {
-                    product: produxctId, quantity: value,
+                    product: productId, 
+                    quantity: value,
                     total: total
                 },
             }
@@ -79,7 +80,7 @@ exports.uploadCartRoute = async (req,res,next)=>{
 
     await CartModel.create({
         userId: userId,
-        products: { product: productId, quantity: value, total: total },
+        products: { product: productId, quantity: value, total: total, quantity:value },
         quantity:value
     })
 }
@@ -105,7 +106,7 @@ exports.updateQty = async (req,res,next) => {
   let productId = req.body.product
   let count = req.body.quantity
   const product = await ProductsModel.findById(productId);
-  let price = product.price
+  let price = product.discountPrice
   let cart = await CartModel.findOne({userId:userId}).lean()
   let total = price*count
     //increment quantity
@@ -138,16 +139,15 @@ exports.getProductGrandTotal = async (req,res,next)  => {
      const userId = user._id 
        let productGrandTotal = await utils.getProductsGrandTotal(userId);
        const cartData = await CartModel.findOne({userId}).populate('products.product').lean()
+       await CartModel.findOneAndUpdate({userId},{subTotal:productGrandTotal})
        let products = cartData.products;
-       console.log('xxxxxxxxxxxxxxxxx',products[0].total)
-       console.log('GRAND TOTAL :---------------------------------- ',productGrandTotal);
        return res.json({
          status:'success',
          message:'ethi',
           price: productGrandTotal
        })
   } catch (error) {
-    res.render('/login')
+    res.render('/login');
   }
 
  
@@ -159,7 +159,7 @@ exports.getProductGrandTotal = async (req,res,next)  => {
 exports.deleteCart = async (req,res,next) => {
 
   // try {
-    const user = await utils.getUser(req)
+    const user = await utils.getUser(req);
     const userId = user.id
     const productId = req.body.product
 

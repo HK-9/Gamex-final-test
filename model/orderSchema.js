@@ -1,31 +1,96 @@
-const mongoose = require("mongoose")
-const uniqueValidator = require('mongoose-unique-validator')
-const couponSchema = new mongoose.Schema({
-    shippingMethod: {
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
+const orderSchema = new mongoose.Schema(
+  {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "Users",
+      // required:true
     },
-    customer:{
-        type:String
+    fname: {
+      type: String,
+      // unique:true
     },
-    orderData:{
-        type:String,
-        unique:true
+    lname: {
+      type: String,
+      // unique:true
     },
-    quantity:{
-        type:Number
+
+    phone: {
+      type: Number,
     },
-    unitPrice:{
-        type:Number
+    zip: {
+      type: String,
+      // unique:true
     },
-    discount:{
-        type:Number
+
+    address: {
+      type: String,
+      // unique:true
     },
-    unitPrice:{
-        type:Boolean,
-        default:false
-    }
-})
-couponSchema.plugin(uniqueValidator);
-const CouponModel = mongoose.model('coupon',couponSchema);
-module.exports = CouponModel
+    email: {
+      type: String,
+      // unique:true
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+      // unique:true
+    },
+    landMark: {
+      type: String,
+    },
+    orderStatus: {
+      type: String,
+      default: "Pending",
+    },
+    paymentType: {
+      type: String,
+    },
+    paymentStatus: {
+      type: String,
+      default: "Pending",
+    },
+    orderId: {
+      type: String,
+    },
+    grandTotal: {
+      type: Number,
+    },
+    discount: {
+      type: Number,
+    },
+    //--------------------------------------------------
+    couponDiscount: {
+        type: Number,
+      },
+      subTotal:{
+          type: Number
+      },
+      totalPaid:{
+          type:Number
+      },
+    products: [
+
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "products",
+        },
+        quantity: {
+          type: Number,
+        },
+        price: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+// couponSchema.plugin(uniqueValidator);
+const OrderModel = mongoose.model("order", orderSchema);
+module.exports = OrderModel;

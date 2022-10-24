@@ -1,5 +1,4 @@
-// const stripe = require('stripe')
-// const session = require('express-session')
+
 const ProductsModel = require('../model/productsSchema');
 const CartModel = require('../model/cartSchenma');
 const UsersModel = require('../model/usersSchema');
@@ -78,44 +77,3 @@ exports.confirmOrderRoute = async (req,res,next) => {
         userLoggedIn:logged,orderData,populatedOrderData
     })
 }
-//==================================== S T R I P E  P A G E  R E N D E R  R O U T E ====================================
-
-// exports.renderStripeRoute = async (req,res,next) => {
-//     user = await utils.getUser(req)
-//     userId = user._id
-//     const orderData = await OrderModel.findOne({userId}).sort({_id:-1}).limit(1).lean()
-//     const orderId = orderData._id
-//     const amount = orderData.totalPayed
-
-
-//     const session = await stripe.checkout.sessions.create({
-//         payment_method_types: ['card'],
-//         // success_url: `${req.protocol}://${req.get('host')}/my-tours/?tour=${
-//         //   req.params.tourId
-//         // }&user=${req.user.id}&price=${tour.price}`,
-//         success_url: 'http://localhost:3001/',
-//         cancel_url:'http://localhost:3001/checkout',
-//         customer_email: req.user.email,
-//         client_reference_id: req.params.tourId,
-//         line_items: [
-//           {
-//             name: `${tour.name} Tour`,
-//             description: tour.summary,
-//             images: [
-//               `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`
-//             ],
-//             amount: tour.price * 100,
-//             currency: 'INR',
-//             quantity: 1
-//           }
-//         ]
-//       });
-
-//     //Create session as response
-
-//     res.status(200).json({
-//         status:'success',
-//         session
-//     })
-    
-// }

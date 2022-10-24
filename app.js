@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const stripe = require('stripe')
 const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'})
 const createError = require('http-errors');
@@ -7,7 +6,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-let session = require("express-session")
 let hbs = require('express-handlebars')
 const  db = require('./db') //database connection
 const AppError = require('./util/AppError')

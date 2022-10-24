@@ -24,6 +24,17 @@ const userSchema = new mongoose.Schema({
   conpassword: {
     type: String,
   },
+  addresses:[
+    {
+    address:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "address"
+    }
+  }
+  ],
+  couponId:{
+    type:String
+  },
   date:{
    type:Date,
    default: Date.now 
@@ -31,11 +42,18 @@ const userSchema = new mongoose.Schema({
   status:{
     type:Boolean,
     default:true
+  },
+  IsOtpVerified:{
+    type:Boolean,
+    default:false
+  },isCouponUsed:{
+    type:Boolean,
+    default:false
   }
 
 
 },{timestamps:true});
-//  userSchema.plugin(uniqueValidator);
+ userSchema.plugin(uniqueValidator);
 
 //Only run if the password modified
 userSchema.pre("save", async function (next) {

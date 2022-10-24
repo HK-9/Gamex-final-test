@@ -6,6 +6,8 @@ const process = require("process");
 const bcrypt = require("bcryptjs");
 const AppError = require("./../util/AppError");
 const { token } = require("morgan");
+const { resolve } = require("path");
+const { findOne, findOneAndUpdate } = require("../model/categorySchema");
 
 // const { token } = require('morgan');
 
@@ -23,13 +25,15 @@ exports.SubmitRoute = async (req, res) => {
     }); //token created
 
     //   newUserModel.token=token
-    res.status(201).json({
-      staus: "success",
-      token,
-      data: {
-        user: newUserModel,
-      },
-    });
+    res.status(201)
+    // .json({
+    //   staus: "success",
+    //   token,
+    //   data: {
+    //     user: newUserModel,
+    //   },
+    // });
+    res.redirect('/login')
   } catch (err) {
     res.status(400).json({
       status: "fail",
@@ -55,18 +59,14 @@ exports.loginSubmit = async (req, res, next) => {
     }
     //2) check if he user exists and password is correct
     const user = await UsersModel.findOne({ email }).select("+password");
-    console.log("email", email);
-    console.log(user);
-    
+    //3) check if the user is blocked
     const blocked = user.status
-    console.log(blocked)
     if(blocked==false){
       return res.status(401).json({
         status:'failed',
         message:'You are blocked'
       })
     }
-
     //check user exists DB            //check password
     if (!user || !(await user.correctPassword(password, user.password))) {
       return res.json({
@@ -79,13 +79,23 @@ exports.loginSubmit = async (req, res, next) => {
       //token generated and issued for user
       expiresIn: 90000,
     });
+     //4) check user varified OTP
+    //  res.status(200).cookie('jwt',token).redirect('/')
 
-    res.status(200).cookie('jwt',token).redirect('/')
+     const otpVerify = user.IsOtpVerified;
+     console.log('otpVerify:',otpVerify)
+     if(otpVerify==false){
+      const userId = user._id
+      await UsersModel.updateOne({ _id: userId }, { $set: { IsOtpVerified: true } });
+      return res.status(200).cookie('jwt',token).redirect('/otp')
+     }
+     res.status(200).cookie('jwt',token).redirect('/')
     
   } catch (err) {
     res.status(400).json({
       status: "fail",
       message: "Login catch block ",
+      data:err
     });
   }
 };
@@ -95,9 +105,8 @@ exports.loggedOut = (req,res,next) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-  res.status(200).json ({status:'success'})
+  res.redirect('/login')
 }
-
 //======================================AUTH MIDDLEWARE===========================================
 
 exports.protect = async (req, res, next) => {
@@ -142,6 +151,49 @@ exports.protect = async (req, res, next) => {
 };
 
 
-// exports.isLoggedIn = asysc (req,res,next){
-//   if (req.cookies.jwt)
-// }
+//======================================OTP VARIFICATION===================================================
+const serviceID = process.env.TWILO_SERVICE_ID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const accountSID = process.env.TWILIO_ACCOUNT_SID;
+const client = require('twilio')(accountSID,authToken);
+
+exports.otpRoute = async (req,res,next)=>{
+  
+  const user = await utils.getUser(req);  
+  const phone = user.phone
+
+  await client.verify
+  .services(serviceID)
+  .verifications
+  .create({
+    to:`+91${phone}`,
+    channel:"sms"
+  })
+
+  res.render('users/otp')
+}
+exports.otpVerify = async(req,res,next) =>{
+  const user = await utils.getUser(req);
+  const phone = user.phone
+  const obj = req.body
+  const otp = Object.values(obj).join('');
+  console.log('otp form data:------',otp)
+  client.verify
+  .services(serviceID)
+  .verificationChecks
+  .create({
+    to:`+91${phone}`,
+    code: otp,
+  })
+  .then(resp => {
+    
+    console.log('otp res :',resp.valid)
+    if(resp.valid){
+     return res.redirect('/')
+    }
+    res.json({
+      status:'failed',
+      message:'the otp entered is not valid '
+    })
+  })
+}

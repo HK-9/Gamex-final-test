@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		
 		<base href="" target="_self">
 		<title>Home</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+		<script src="https://unpkg.com/axios@0.25.0/dist/axios.min.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="https://code.jquery.com/jquery-3.6.0.js"
 			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 			crossorigin="anonymous"></script>
@@ -31,35 +33,35 @@
     =============================================
     -->
 		<link rel="apple-touch-icon" sizes="57x57"
-			href="assets/images/favicons/apple-icon-57x57.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="60x60"
-			href="assets/images/favicons/apple-icon-60x60.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="72x72"
-			href="assets/images/favicons/apple-icon-72x72.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="76x76"
-			href="assets/images/favicons/apple-icon-76x76.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="114x114"
-			href="assets/images/favicons/apple-icon-114x114.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="120x120"
-			href="assets/images/favicons/apple-icon-120x120.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="144x144"
-			href="assets/images/favicons/apple-icon-144x144.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="152x152"
-			href="assets/images/favicons/apple-icon-152x152.png">
+			href="/images/icons/favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180"
-			href="assets/images/favicons/apple-icon-180x180.png">
+			href="/images/icons/favicon.ico">
 		<link rel="icon" type="image/png" sizes="192x192"
-			href="assets/images/favicons/android-icon-192x192.png">
+			href="/images/icons/favicon.ico">
 		<link rel="icon" type="image/png" sizes="32x32"
-			href="assets/images/favicons/favicon-32x32.png">
+			href="/images/icons/favicon.ico">
 		<link rel="icon" type="image/png" sizes="96x96"
-			href="assets/images/favicons/favicon-96x96.png">
+			href="/images/icons/favicon.ico">
 		<link rel="icon" type="image/png" sizes="16x16"
-			href="assets/images/favicons/favicon-16x16.png">
+			href="/images/icons/favicon.ico">
 		<link rel="manifest" href="/manifest.json">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage"
-			content="assets/images/favicons/ms-icon-144x144.png">
+			content="/images/icons/favicon.ico">
 		<meta name="theme-color" content="#ffffff">
 		<!--  
     Stylesheets
@@ -67,7 +69,7 @@
     
     -->
 		<!-- Default stylesheets-->
-		<link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Template specific stylesheets-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"
 			rel="stylesheet">
@@ -76,22 +78,22 @@
 		<link
 			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
 			rel="stylesheet">
-		<link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-		<link href="assets/lib/components-font-awesome/css/font-awesome.min.css"
+		<link href="/assets/lib/animate.css/animate.css" rel="stylesheet">
+		<link href="/assets/lib/components-font-awesome/css/font-awesome.min.css"
 			rel="stylesheet">
-		<link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-		<link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-		<link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css"
+		<link href="/assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
+		<link href="/assets/lib/flexslider/flexslider.css" rel="stylesheet">
+		<link href="/assets/lib/owl.carousel/dist/assets/owl.carousel.min.css"
 			rel="stylesheet">
-		<link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css"
+		<link href="/assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css"
 			rel="stylesheet">
-		<link href="assets/lib/magnific-popup/dist/magnific-popup.css"
+		<link href="/assets/lib/magnific-popup/dist/magnific-popup.css"
 			rel="stylesheet">
-		<link href="assets/lib/simple-text-rotator/simpletextrotator.css"
+		<link href="/assets/lib/simple-text-rotator/simpletextrotator.css"
 			rel="stylesheet">
 		<!-- Main stylesheet and color file-->
-		<link href="assets/css/style.css" rel="stylesheet">
-		<link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+		<link href="/assets/css/style.css" rel="stylesheet">
+		<link id="color-scheme" href="/assets/css/colors/default.css" rel="stylesheet">
 		<script src="/javascripts/valiidation.js"></script>
 		<link rel="stylesheet" href="/stylesheets/style.css">
 		<link rel="stylesheet"
@@ -108,10 +110,10 @@
 			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 			crossorigin="anonymous">
 		<!--===============================================================================================-->
-		<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+		<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
-			href="vendor/bootstrap/css/bootstrap.min.css">
+			href="/vendor/bootstrap/css/bootstrap.min.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
 			href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -122,23 +124,23 @@
 		<link rel="stylesheet" type="text/css"
 			href="fonts/linearicons-v1.0.0/icon-font.min.css">
 		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+		<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
-			href="vendor/css-hamburgers/hamburgers.min.css">
+			href="/vendor/css-hamburgers/hamburgers.min.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
-			href="vendor/animsition/css/animsition.min.css">
+			href="/vendor/animsition/css/animsition.min.css">
 		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css"
-			href="vendor/daterangepicker/daterangepicker.css">
-		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+		<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
-			href="vendor/MagnificPopup/magnific-popup.css">
+			href="/vendor/daterangepicker/daterangepicker.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="/vendor/slick/slick.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css"
+			href="/vendor/MagnificPopup/magnific-popup.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css"
 			href="vendor/perfect-scrollbar/perfect-scrollbar.css">
@@ -147,25 +149,33 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<!--===============================================================================================-->
 	</head>
-	<body>
+	<body  onload="grandTotal()">
+		
 		{{#if admin}}
 		{{>admin-header}}
 		{{else if userLoggedIn}}
 		{{>users-header}}
+		{{else if noHeader}}
+		{{NULL}}
 		{{else}}
 		{{>guestUsers-header}}
 		{{/if}}
 
+
 		{{{body}}}
+
+
+
+
 		<!--===============================================================================================-->
-		<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+		<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/animsition/js/animsition.min.js"></script>
+		<script src="/vendor/animsition/js/animsition.min.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/bootstrap/js/popper.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/vendor/bootstrap/js/popper.js"></script>
+		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/select2/select2.min.js"></script>
+		<script src="/vendor/select2/select2.min.js"></script>
 		<script>
 		$(".js-select2").each(function(){
 			$(this).select2({
@@ -175,18 +185,18 @@
 		})
 	</script>
 		<!--===============================================================================================-->
-		<script src="vendor/daterangepicker/moment.min.js"></script>
-		<script src="vendor/daterangepicker/daterangepicker.js"></script>
+		<script src="/vendor/daterangepicker/moment.min.js"></script>
+		<script src="/vendor/daterangepicker/daterangepicker.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/slick/slick.min.js"></script>
+		<script src="/vendor/slick/slick.min.js"></script>
 		<script src="js/slick-custom.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/parallax100/parallax100.js"></script>
+		<script src="/vendor/parallax100/parallax100.js"></script>
 		<script>
         $('.parallax100').parallax100();
 	</script>
 		<!--===============================================================================================-->
-		<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+		<script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 		<script>
 		$('.gallery-lb').each(function() { // the containers for all your galleries
 			$(this).magnificPopup({
@@ -200,9 +210,9 @@
 		});
 	</script>
 		<!--===============================================================================================-->
-		<script src="vendor/isotope/isotope.pkgd.min.js"></script>
+		<script src="/vendor/isotope/isotope.pkgd.min.js"></script>
 		<!--===============================================================================================-->
-		<script src="vendor/sweetalert/sweetalert.min.js"></script>
+		<script src="/vendor/sweetalert/sweetalert.min.js"></script>
 		<script>
 		$('.js-addwish-b2').on('click', function(e){
 			e.preventDefault();
@@ -240,7 +250,7 @@
 	
 	</script>
 		<!--===============================================================================================-->
-		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 		<script>
 		$('.js-pscroll').each(function(){
 			$(this).css('position','relative');
@@ -257,22 +267,38 @@
 		});
 	</script>
 		<!--===============================================================================================-->
-		<script src="js/main.js"></script>
+		<script src="/js/main.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="assets/lib/jquery/dist/jquery.js"></script>
-		<script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="assets/lib/wow/dist/wow.js"></script>
-		<script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-		<script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
-		<script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
-		<script src="assets/lib/flexslider/jquery.flexslider.js"></script>
-		<script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
-		<script src="assets/lib/smoothscroll.js"></script>
-		<script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+		<script src="/assets/lib/jquery/dist/jquery.js"></script>
+		<script src="/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="/assets/lib/wow/dist/wow.js"></script>
+		<script src="/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+		<script src="/assets/lib/isotope/dist/isotope.pkgd.js"></script>
+		<script src="/assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+		<script src="/assets/lib/flexslider/jquery.flexslider.js"></script>
+		<script src="/assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+		<script src="/assets/lib/smoothscroll.js"></script>
+		<script src="/assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
 		<script
-			src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-		<script src="assets/js/plugins.js"></script>
-		<script src="assets/js/main.js"></script>
+			src="/assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+		
+		<script src="/assets/js/plugins.js"></script>
+		<script src="/assets/js/main.js"></script>
+
+
 	</body>
+ <script>
+		//======================= P R O D U C T  G R A N T  T O T A L =============================
+	function grandTotal(){
+		axios({
+					method:'post',
+					url:'/getProductGrandTotal',
+				}).then((res) => {
+					let dbGrandTotal = res.data.price
+				})
+		
+	}
+</script>
+	
 </html>

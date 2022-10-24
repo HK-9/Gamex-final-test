@@ -12,7 +12,10 @@ const productsSchema = mongoose.Schema({
     },
     discount:{
         type: Number 
-    },  
+    }, 
+    discountPrice:{
+        type: Number
+    },
     stock:{
         type: Number
     },
@@ -23,7 +26,11 @@ const productsSchema = mongoose.Schema({
     },
     discription:{       
         type: String 
-    }
+    },
+    quantity:{
+        type:Number,
+    },
+    
 })
 const ProductsModel = mongoose.model('products',productsSchema)
 module.exports = ProductsModel

@@ -874,6 +874,7 @@ const btn = document.querySelector('#btn');
             // show the output:
             // output.innerText = selectedAddressId ? `You selected ${selectedAddressId}` : `You haven't selected any size`;
 		//send the cheked address ID to server using axios
+			
 			const payload = selectedAddressId;
 		console.log(payload)
         		
@@ -940,7 +941,7 @@ const btn = document.querySelector('#btn');
 		}
 
 	</script>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 	<script>
 
 	//======================= C O N F I R M   O R D E R =============================
@@ -951,18 +952,31 @@ const btn = document.querySelector('#btn');
 			 selectedPaymentMethod = document.querySelector
 			("input[name='payment']:checked").value;
 			console.log("selectedPaymentMethod:",selectedPaymentMethod)
+
+			
+
 		}
 
 	paymentBtns.forEach(radioBtn => {
   
 		radioBtn.addEventListener("change",findSelected);
 		
-		return selectedPaymentMethod
 	})
 
+	
+			
 
 	function confirmOrder() {
+					 const radioButtons = document.querySelectorAll('input[name="payment"]');
+			 			let selected;
+						 for (const radioButton of radioButtons) {
+                if (radioButton.checked) {
+                    selected = radioButton.value;
+                    break;
+                }
+            }
 	console.log('inside botton click')
+	if(selected == 'cod'){
 		axios({
 				method:'post',
 				url:'/payment',	
@@ -975,10 +989,72 @@ const btn = document.querySelector('#btn');
 				console.log('response is',e)
 				if (payment == 'cod'){
 				location.replace('/render-cod')
-				}else{
-					location.replace('/render-stripe')
-				}
-				
+				}	
 			})
+	}else{ //razor pay
+		axios({
+				method:'post',
+				url:'/intiate_razorpay',
+
+				data:{
+					payment:selectedPaymentMethod,
+
+				},
+				success: (res) => {
+				}
+		   }).then((res)=>{
+						console.log('res',res.data.razorData.id)
+					amount = res.data.razorData.amount * 100;
+					console.log(amount);
+					var options = {
+					"key": "rzp_test_ISP28FsFgtT1QX", // Enter the Key ID generated from the Dashboard
+					"amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+					"currency": "INR",
+					"name": "Gamex",
+					"description": "India's best audio product selling website",
+					"image": "https://example.com/your_logo",
+ //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+					"handler": function (response) {
+
+					verifyPayment(response, res.data.razorData);
+					},
+					"prefill": {
+					"name": "Gaurav Kumar",
+					"email": "gaurav.kumar@example.com",
+					"contact": "9999999999"
+					},
+					"notes": {
+					"address": "Razorpay Corporate Office"
+					},
+					"theme": {
+					"color": "#3399cc"
+					}
+					};
+					var rzp1 = new Razorpay(options);
+					rzp1.open();
+					rzp1.on('payment.failed', function (response) {
+         			 });
+
+		   })
+
+
+	}	
+
+		function verifyPayment(razorResponse, razorData) {
+
+		axios({
+		url: '/verifyRazorpay',
+		method: 'post',
+		data: {
+			razorResponse,
+			razorData
+		},
+		success: (res) => {
+			if (res.status) {
+			location.replace('/render-cod');
+			}
+		}
+		})
+	}
 	 }
 	</script>

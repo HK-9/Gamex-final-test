@@ -5,8 +5,9 @@ const UsersModel = require('../model/usersSchema');
 const CouponModel = require('../model/couponSchema')
 const utils = require('../util/utils'); 
 const CategoryModel = require('../model/categorySchema');
-
-const OrderModel = require ('../model/orderSchema')
+const razorpay = require('../controllers/razorpayController')
+const OrderModel = require ('../model/orderSchema');
+const { findOne } = require('../model/adminsSchema');
 
 //============================-V I E W   C H E C K O U T-===============================
 exports.checkoutRoute = async (req, res, next) => {
@@ -82,9 +83,9 @@ exports.checkoutRoute = async (req, res, next) => {
 
 //============================ U P L O A D  A D D R E S S ===============================
 
-  exports.uploadAddress = async(req,res,next) => {
+exports.uploadAddress = async(req,res,next) => {
     user = await utils.getUser(req);
-
+    
     userId = user._id
     const fname = req.body.payload.fname;
     const lname = req.body.payload.lname;
@@ -96,16 +97,16 @@ exports.checkoutRoute = async (req, res, next) => {
     const zip = req.body.payload.zip;
     console.log('zip:',zip)
     const landmark = req.body.payload.landmark;
-//    try {
+    //    try {
 
-    // const addressData = await UsersModel.findOne({userId:user,"addresses:address":userId})
+        // const addressData = await UsersModel.findOne({userId:user,"addresses:address":userId})
 
-    // if(addressData){
+        // if(addressData){
         
-    // }
+            // }
 
-    formData = req.body
-      
+            formData = req.body
+            
     await AddressModel.create({
         userId:userId,
         fname:fname,
@@ -118,27 +119,27 @@ exports.checkoutRoute = async (req, res, next) => {
         zip:zip,
         landmark:landmark
     })
-
-
+    
+    
    const addressData = await AddressModel.find({userId:userId},{_id:1}).lean()
-    const addressLen = addressData.length;
-    const addressId = addressData[addressLen-1]
+   const addressLen = addressData.length;
+   const addressId = addressData[addressLen-1]
 
     id = userId
 
     await UsersModel.findOneAndUpdate({ _id: id }, {
         $push: {    
-                addresses: {
+            addresses: {
                 address: addressId,
             },
         }
     })
     if(addressLen <= 1){
-    await AddressModel.findOneAndUpdate({_id:addressId}, { isActive:true})
+        await AddressModel.findOneAndUpdate({_id:addressId}, { isActive:true})
     }
     //   const  uniqueUserAddressData = await utils.getUserAddress(user.id) 
       const uniqueUserAddressData = await UsersModel.findOne({userId}).populate('addresses.address').lean();
-                           
+      
 
     res.status(200).json({
         status:'success',
@@ -151,7 +152,75 @@ exports.checkoutRoute = async (req, res, next) => {
 //         message:error
 //     })
 //    }
-    
+
+
+}
+
+//============================ R A Z O R   P A Y ===============================
+
+
+exports.intiatePay = async (req, res, next) => {  
+    // try {
+        
+        req.body.paymentType = "Online Payment";
+        
+        const user = await utils.getUser(req)
+        const userId = user._id
+        const paymentMethod = req.body.payment
+        
+        const  addressData = await utils.getUserAddress(userId)
+        const cartData = await utils.cartDetails(userId);
+            //have
+            const grandTotal = cartData.grandTotal;
+            const couponDiscount = cartData.couponDiscount;
+            const totalPayed = cartData.totalPayed;
+            const subTotal = cartData.subTotal;
+            // console.log('@discount',couponDiscount)
+          
+            req.body = addressData,grandTotal,totalPayed,subTotal,couponDiscount
+            // quantity,price,discount;
+        
+            req.body.products = cartData.products
+            const productId = await CartModel.findOne({userId:userId},{_id:0,"products.product":1})
+            let id = productId.products
+            
+            await OrderModel.create(req.body)
+          
+          const orderData = await OrderModel.findOne({userId:userId}).sort({_id:-1}).limit(1).lean()
+          const orderId = orderData._id
+          await OrderModel.findOneAndUpdate({_id:orderData._id},{grandTotal:grandTotal})
+          const populatedOrderData = await utils.getPopulatedOrder(userId)
+        
+          await OrderModel.updateOne({userId:userId,_id:orderId},
+          {
+             couponDiscount:couponDiscount,
+             subTotal:subTotal,
+             totalPayed:totalPayed,
+             orderStatus:"confirmed",
+             paymentType:paymentMethod
+          //     'products.$.subTotal':subTotal,
+          //   'products.$.couponDiscount':couponDiscount,
+          //   'products.$.totalPayed':totalPayed
+            })
+        console.log('ethi')
+        try {
+            
+            amountPaid = orderData.totalPaid
+            totalAmounts = amountPaid * 100;
+            razorData = await razorpay.intiateRazorpay(orderData._id, cartData.totalAmounts);
+            console.log("razorData",razorData);
+            await OrderModel.findOneAndUpdate({ _id: orderData._id }, { orderId: razorData.id });
+            razorId = process.env.RAZOR_PAY_ID;
+            
+            // req.session.confirmationData = { orderDataPopulated, amountPaid };
+            
+           return res.json({ message:'success',totalAmounts,razorData,orderData});
+        } catch (error) {
+            console.log('razor error',error)
+        }
+//    } catch (error) {
+//    next(error)
+//    }
     
 }
 

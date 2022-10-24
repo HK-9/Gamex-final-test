@@ -278,37 +278,28 @@
                             <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Marketing</h5>
                         </div>
                         <div class="card-body pt-0">
-                            <h4 class="h2 lh-1 mb-2">+15,870.98 USD</h4>
-
-                            <p class="mb-3 mb-md-4">Total Income</p>
-
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <strong class="d-block mb-3">Conversion Rate</strong>
-
-                                    <div class="d-flex align-items-center text-muted mb-2">
-                                        <span class="indicator indicator-lg indicator-primary rounded-circle mr-2"></span>
-                                        <small>AdWords</small>
-                                    </div>
-
-                                    <div class="d-flex align-items-center text-muted">
-                                        <span class="indicator indicator-lg bg-semi-lighter rounded-circle mr-2"></span>
-                                        <small>Facebook</small>
-                                    </div>
-                                </div>
-
-                                <div class="js-donut-chart position-relative d-flex ml-auto" style="width: 120px; height: 120px;"
-                                     data-series='[
-                               {"meta":"AdWords - ","value":78},
-                               {"meta":"Facebook - ","value":22}
-                             ]'
-                                     data-border-width="8"
-                                     data-start-angle="0"
-                                     data-fill-colors='["#8069f2","#eeeef1"]'
+                           <div class="border-bottom p-3 p-md-4 mt-3 pb-md-6">
+                                <div class="js-bar-chart position-relative" style="height: 160px;"
+                                     data-series="[
+                               [160,160,160,160,160,160,160,160,160,160,160,160],
+                               [92,97,124,137,97,124,46,97,90,97,111,90],
+                               [69,47,69,53,45,94,34,31,68,73,83,68]
+                             ]"
+                                     data-height="160"
+                                     data-high="160"
+                                     data-low="0"
+                                     data-distance="20"
+                                     data-stroke-width="5"
+                                     data-stroke-color='["#e0f6fc","#a0eee7","#8069f2"]'
+                                     data-is-stack-bars="true"
+                                     data-is-show-axis-x="false"
+                                     data-is-show-axis-y="false"
+                                     data-is-show-label-axis-x="false"
+                                     data-is-show-label-axis-y="false"
+                                     data-is-stroke-rounded="true"
                                      data-is-show-tooltips="true"
-                                     data-tooltip-currency="%"
-                                     data-is-tooltip-currency-reverse="true"
-                                     data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle chart-tooltip--centered chart-tooltip--black small text-white text-nowrap px-2 py-1"></div>
+                                     data-postfix="%"
+                                     data-tooltip-custom-class="chart-tooltip chart-tooltip--black small text-white px-2 py-1"></div>
                             </div>
                         </div>
                     </div>
@@ -361,7 +352,7 @@
 
             </div>
 
-            <div class="row">
+            {{!-- <div class="row">
                 <div class="col-12">
                     <!-- Card -->
                     <div class="card mb-3 mb-md-4">
@@ -757,7 +748,7 @@
                     </div>
                     <!-- End Card -->
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
@@ -816,12 +807,13 @@
                     <!-- Card -->
                     <div class="card h-100">
                         <div class="card-header d-flex">
-                            <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Available Balance</h5>
+                            <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">PAYEMENT METHOD</h5><br>
+                           
                         </div>
                         <div class="card-body p-0">
                             <div class="border-bottom text-center p-3 p-md-4 pb-md-6">
                                 <div class="js-donut-chart position-relative d-flex mx-auto mb-3 mb-md-4" style="width: 130px; height: 130px;"
-                                     data-series="[50,50]"
+                                     data-series="[{{codCount}},50]"
                                      data-border-width="12"
                                      data-slice-margin="2"
                                      data-start-angle="0"
@@ -831,13 +823,14 @@
                                      data-is-tooltip-currency-reverse="true"
                                      data-tooltip-custom-class="chart-tooltip chart-tooltip--triangle-right chart-tooltip--black small text-white px-2 py-1 mt-5 ml-n5"></div>
 
-                                <div class="small text-muted">Total Balance ≈ 32,754.56 USD</div>
+                                <div class="small text-muted">Total Income</div>
+                                 <h4 class="h2 lh-1 mb-2">+15,870.98 USD</h4>
                             </div>
 
                             <div class="border-bottom media align-items-center p-3">
                                 <div class="media-body d-flex align-items-center mr-2">
-                                    <span>Cash</span>
-                                    <span class="ml-auto">$13,380.25</span>
+                                    <span>COD</span>
+                                    <span class="ml-auto">{{codCount}}</span>
                                 </div>
 
                                 <i class="gd-arrow-up icon-text icon-text-xs d-flex text-success ml-auto"></i>
@@ -845,7 +838,7 @@
 
                             <div class="media align-items-center p-3">
                                 <div class="media-body d-flex align-items-center mr-2">
-                                    <span>Bank Account</span>
+                                    <span>Online Payments</span>
                                     <span class="ml-auto">$19,432.80</span>
                                 </div>
 
@@ -1365,7 +1358,7 @@
                 </div>
 
                 <div class="col-lg text-center text-lg-right">
-                    &copy; 2019 Graindashboard. All Rights Reserved.
+                    &copy; 2022 GAMEX Dash. All Rights Reserved.
                 </div>
             </div>
         </footer>

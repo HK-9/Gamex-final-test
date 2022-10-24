@@ -12,12 +12,14 @@ exports.loginRoute = (req, res) => {
   });
 };
 exports.indexRoute = async (req, res, next) => {
-  const orderData = await OrderModel.findOne().lean()
-  
+  const codCount = await OrderModel.countDocuments({paymentType:"cod"}).exec()
+  // cont onlinePayement = await OrderModel.findOne({paymentStatus:"card"}) 
 
+  console.log('codCount:',codCount) 
   res.render("admin/index", { admin: true,
      layout: "adminLayout",
-     title:"Admin | Login"
+     title:"Admin | Login",
+     codCount
      });
 };
 
@@ -56,9 +58,9 @@ exports.ordersEditRoute = async (req, res, next) => {
   let orderData = await OrderModel.findOne({_id:orderId}).lean()
 
   if(orderData.orderStatus == 'confirmed') {placed=true}
-  else if(orderData.orderStatus=='shipped') {shipped = true;}
-  else if(orderData.orderStatus=='delivered') {delivered = true}
-  else if(orderData.orderStatus=='cancelled') {cancelled = true}
+  else if(orderData.orderStatus =='shipped') {shipped = true;}
+  else if(orderData.orderStatus =='delivered') {delivered = true}
+  else if(orderData.orderStatus =='cancelled') {cancelled = true}
   
   
   res.render('admin/dashboard/editOrderStatus',{

@@ -30,7 +30,6 @@ router.get("/myProfile",myAccountController.myAccoutRoute)
 router.get('/manage-address',myAccountController.manageAddressRoute)
 router.get('/render-cod',orderController.renderCodRoute)
 router.get('/render-stripe',orderController.renderStripeRoute)
-
 router.get('/test',userController.testRoute)
 
 //========== U S E R   A U T H   C O N T R O L L E R S ===================
@@ -58,6 +57,7 @@ router.post('/checked-address',myAccountController.findCheckedAddressRoute)
 router.post('/redeem-coupon',couponController.redeemCouponRoute)
 router.post('/payment',orderController.confirmOrderRoute)
 
+router.post('/intiate_razorpay',checkoutController.intiatePay)
 
 
 

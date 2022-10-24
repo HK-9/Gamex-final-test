@@ -72,6 +72,12 @@ const orderSchema = new mongoose.Schema(
       totalPaid:{
           type:Number
       },
+      orderId:{
+        type:String
+      },
+      razorId:{
+        type:String
+      },
     products: [
 
       {

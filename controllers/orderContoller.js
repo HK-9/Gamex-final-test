@@ -9,34 +9,28 @@ const OrderModel = require('../model/orderSchema')
 
 //put code here for cod and payment.
 exports.confirmOrderRoute = async (req,res,next) => {
-    const user = await utils.getUser(req)
-    const userId = user._id
+      const user = await utils.getUser(req)
+      const userId = user._id
+      const paymentMethod = req.body.payment
 
-    const paymentMethod = req.body.payment
-
-    const  addressData = await utils.getUserAddress(userId)
-    console.log("addressData",addressData)
-    const cartData = await utils.cartDetails(userId);
-        //have
-        const grandTotal = cartData.grandTotal;
-        //requirement
-        const couponDiscount = cartData.couponDiscount;
-        const totalPayed = cartData.totalPayed;
-        const subTotal = cartData.subTotal;
-
-        // const discount = await utils.getCouponDiscount 
-        console.log('@discount',couponDiscount)
+      const  addressData = await utils.getUserAddress(userId)
+      console.log("addressData",addressData)
+      const cartData = await utils.cartDetails(userId);
+          //have
+          const grandTotal = cartData.grandTotal;
+          const couponDiscount = cartData.couponDiscount;
+          const totalPayed = cartData.totalPayed;
+          const subTotal = cartData.subTotal;
+          // console.log('@discount',couponDiscount)
         
+          req.body = addressData,grandTotal,totalPayed,subTotal,couponDiscount
+          // quantity,price,discount;
 
-        req.body = addressData,grandTotal,totalPayed,subTotal,couponDiscount
-        // quantity,price,discount;
-
-      
-        req.body.products = cartData.products
-        const productId = await CartModel.findOne({userId:userId},{_id:0,"products.product":1})
-        let id = productId.products
-        
-        await OrderModel.create(req.body)
+          req.body.products = cartData.products
+          const productId = await CartModel.findOne({userId:userId},{_id:0,"products.product":1})
+          let id = productId.products
+          
+          await OrderModel.create(req.body)
         
         const orderData = await OrderModel.findOne({userId:userId}).sort({_id:-1}).limit(1).lean()
         const orderId = orderData._id
@@ -44,7 +38,7 @@ exports.confirmOrderRoute = async (req,res,next) => {
         await OrderModel.findOneAndUpdate({_id:orderData._id},{grandTotal:grandTotal})
         console.log('sonic',req.body)
         const populatedOrderData = await utils.getPopulatedOrder(userId)
-        // const populatedOrderData = await OrderModel.findOne({_id:orderData._id}).populate("products.product").lean()
+
         await OrderModel.updateOne({userId:userId,_id:orderId},
         {
            couponDiscount:couponDiscount,
@@ -87,8 +81,9 @@ exports.confirmOrderRoute = async (req,res,next) => {
 //==================================== S T R I P E  P A G E  R E N D E R  R O U T E ====================================
 
 exports.renderStripeRoute = async (req,res,next) => {
- 
-    const orderData = await OrderModel.findOne({userId:userId}).sort({_id:-1}).limit(1).lean()
+    user = await utils.getUser(req)
+    userId = user._id
+    const orderData = await OrderModel.findOne({userId}).sort({_id:-1}).limit(1).lean()
     const orderId = orderData._id
     const amount = orderData.totalPayed
 

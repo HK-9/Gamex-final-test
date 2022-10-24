@@ -57,7 +57,6 @@ exports.productsRoute = async (req,res,next) => {
    const files= req.files
    const imageArray = files.map(el=>el.filename)
    req.body.image = imageArray
-   console.log("image>>>>>>>",files)
     try {
       let originalPrice = req.body.price
       let discount = req.body.discount

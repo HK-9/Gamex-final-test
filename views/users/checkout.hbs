@@ -31,7 +31,7 @@
 									</div>
 
 									<div class="position-relative ml-3 ml-md-4">
-										<a id="dropDown3Invoker" class="unfold-invoker d-flex" href="#" aria-controls="dropDown3" aria-haspopup="true" aria-expanded="false" data-unfold-target="#dropDown3" data-unfold-event="click" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
+										<a  id="dropDown3Invoker" class="unfold-invoker d-flex disabled-link" href="#" aria-controls="dropDown3" aria-haspopup="true" aria-expanded="false" data-unfold-target="#dropDown3" data-unfold-event="click" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
 											<i class="gd-more-alt"></i>
 										</a> 
 									</div>
@@ -142,12 +142,13 @@
 				<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm pl-3 p-0">
 							{{#if couponUsed}}
 							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Used" disabled>	
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Used" style="cursor:no-drop">	
+								<div class="flex-c-m stext-101 cl2 size-118 bg2 bor13  p-lr-15  m-tb-5" style="cursor:no-drop">
 									Apply coupon 
 								</div> 
 								<div>
-								<i class="bi bi-tags-fill ml-4 mr-2 cl2"></i>	<span class="stext-111 cl6 p-t-2">Coupon used or expired</span>								</div>
+								<i class="bi bi-tags-fill ml-4 mr-2 cl2"></i>	<span class="stext-111 cl6 p-t-2">Coupon used or expired</span>								
+								</div>
 							</div>
 						</div>
 							{{else}}
@@ -236,7 +237,7 @@
 								
 								<div class="p-t-15">
 									<div class="flex-w">
-										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
+										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn2 p-lr-15 trans-01 pointer">
 											Go Back To Cart
 										</div>
 									</div>
@@ -245,26 +246,14 @@
 							</div>
 						</div>
 
-						<div class="flex-w flex-t p-t-27 p-b-33">
-							<div class="size-208">
-								<span class="mtext-101 cl2">
-									Total: 
-							</div>
-
-							<div class="size-209 p-t-1">
-								<span id="grandTotal" class="mtext-11 cl2">
-								</span> <span class="mtext-110 cl2">₹ </span><span class="mtext-110 cl2">{{finalTotal}}</span>
-								
-								</span>
-							</div>
-						</div>
 
 						{{!-- <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04" onclick="confirmOrder()">
 							Confirm Order
 						</button> --}}
-							<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 m-tb-5" onclick="confirmOrder()">
+							<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-03 m-tb-5 mt-5 pointer" onclick="confirmOrder()">
 									Confirm Order
 								</div> 
+								<small class="d-flex justify-content-center">Choose your payment method before continue !</small>
 					</div>
 				</div>
 				{{else}}
@@ -273,7 +262,7 @@
 						<h4 class="mtext-109 cl2 p-b-30">
 							Cart Totals
 						</h4>
-
+{{!-- 
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
 								<span class="stext-110 cl2">
@@ -282,12 +271,12 @@
 							</div>
 
 							<div class="size-209">
-								<span class="mtext-110 cl2">₹</span><span id="grandTotal" class="mtext-110 cl2">
+								
 									
 									
 								</span>
 							</div>
-						</div>
+						</div> --}}
 
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
 							<div class="header-cart-content flex-w js-pscroll">

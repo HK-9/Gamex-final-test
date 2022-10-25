@@ -28,14 +28,13 @@ exports.confirmOrderRoute = async (req,res,next) => {
           req.body.products = cartData.products
           const productId = await CartModel.findOne({userId:userId},{_id:0,"products.product":1})
           let id = productId.products
+        
           
           await OrderModel.create(req.body)
         
         const orderData = await OrderModel.findOne({userId:userId}).sort({_id:-1}).limit(1).lean()
         const orderId = orderData._id
-        console.log("@orderId:",orderData,orderId)
         await OrderModel.findOneAndUpdate({_id:orderData._id},{grandTotal:grandTotal})
-        console.log('sonic',req.body)
         const populatedOrderData = await utils.getPopulatedOrder(userId)
 
         await OrderModel.updateOne({userId:userId,_id:orderId},
@@ -49,8 +48,6 @@ exports.confirmOrderRoute = async (req,res,next) => {
         //   'products.$.couponDiscount':couponDiscount,
         //   'products.$.totalPayed':totalPayed
           })
-
-        console.log('777',populatedOrderData)
             res.status(200).json({
                 status:'success',
                 data:{
@@ -71,9 +68,10 @@ exports.confirmOrderRoute = async (req,res,next) => {
     const orderId = orderData._id
     const populatedOrderData = await OrderModel.findOne({userId:userId,_id:orderId}).populate("products.product").lean()
     console.log("lastelement@",orderData,populatedOrderData,orderId)
-    
+    const priceOrder = await CartModel.findOne({userId}).populate('products')
+
     res.render('users/codDelivery',{
         layout:'tempLayout',
-        userLoggedIn:logged,orderData,populatedOrderData
+        userLoggedIn:logged,orderData,populatedOrderData,priceOrder
     })
 }

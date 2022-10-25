@@ -27,6 +27,8 @@ router.get('/category',categoryController.categoryRoute);
 router.get('/add_category',categoryController.addCategoryRoute)
 router.get('/edit_category/:id',categoryController.editCategoryRoute);
 router.get('/coupons', couponsController.viewCouponRoute)
+router.get('/sales-report',adminController.salesReportRoute)
+
 
 //AUTH-ROUTES
 router.post('/register', authController.registerRoute)

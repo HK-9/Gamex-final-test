@@ -2,7 +2,7 @@ const AdminModel = require("../../model/adminsSchema");
 const UsersModel = require("../../model/usersSchema");
 const ProductsModel = require("../../model/productsSchema");
 const OrderModel = require("../../model/orderSchema");
-const utils = require('../../util/utils')
+const utils = require('../../util/utils'); 
 
 //--------------------VIEW ROUTES------------------------------------------
 exports.loginRoute = (req, res) => {
@@ -13,13 +13,21 @@ exports.loginRoute = (req, res) => {
 };
 exports.indexRoute = async (req, res, next) => {
   const codCount = await OrderModel.countDocuments({paymentType:"cod"}).exec()
+
+  const orderData = await OrderModel.find().lean()
+  let placed,shipped,delivered,cancelled;
+  let UorderData = await OrderModel.find().lean()
+  if(UorderData.orderStatus == 'confirmed') {placed=true}
+  else if(UorderData.orderStatus=='shipped') {shipped = true;}
+  else if(UorderData.orderStatus=='delivered') {delivered = true}
+  else if(UorderData.orderStatus=='cancelled') {cancelled = true}
   // cont onlinePayement = await OrderModel.findOne({paymentStatus:"card"}) 
 
   console.log('codCount:',codCount) 
   res.render("admin/index", { admin: true,
      layout: "adminLayout",
      title:"Admin | Login",
-     codCount
+     codCount,placed,shipped,delivered,cancelled,orderData
      });
 };
 
@@ -32,6 +40,7 @@ exports.allUsersRoute = async (req, res, next) => {
     users
   });                                                                                                                                                                                                                   
 };
+//==================== O R D E R S   V I E W ========================
 
 exports.ordersRoute = async (req, res, next) => {
   const orderData = await OrderModel.find().lean()
@@ -105,5 +114,18 @@ exports.unblockUserRoute = async (req, res, next) => {
   }
 };
 
-//---------------------- P A Y M E N T ---------------------------------------
+//---------------------- S A L E S   R E P O R T ---------------------------------------
+
+exports.salesReportRoute = async (req,res,next) => {
+  try {
+    const orderData = OrderModel.findOne().lean()
+    res.render("admin/dashboard/salesReport",{
+      admin: true, layout: "adminLayout",
+      orderData
+    })
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 

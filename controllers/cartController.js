@@ -55,9 +55,13 @@ exports.uploadCartRoute = async (req,res,next)=>{
         await CartModel.updateOne({ userId: user, "products.product": productId },
         { $inc: {
              "products.$.quantity": value,
-             "products.$.total": total
+             "products.$.price":total,
+             "products.$.total": total,
             }})
-        await CartModel.updateOne({userId: user, "products.product": productId},{"products.$total": finalTotal})
+        await CartModel.updateOne({userId: user, "products.product": productId},{
+          "products.$total": finalTotal,
+          "product.$price":finalTotal
+        })
     }
 
     else {
@@ -67,7 +71,8 @@ exports.uploadCartRoute = async (req,res,next)=>{
                 products: {
                     product: productId, 
                     quantity: value,
-                    total: total
+                    total: total,
+                    price:total
                 },
             }
         })
@@ -80,7 +85,7 @@ exports.uploadCartRoute = async (req,res,next)=>{
 
     await CartModel.create({
         userId: userId,
-        products: { product: productId, quantity: value, total: total, quantity:value },
+        products: { product: productId, quantity: value, total: total, price:total },
         quantity:value
     })
 }

@@ -208,7 +208,7 @@ exports.intiatePay = async (req, res, next) => {
             amountPaid = orderData.totalPaid
             totalAmounts = amountPaid * 100;
             razorData = await razorpay.intiateRazorpay(orderData._id, cartData.totalAmounts);
-            console.log("razorData",razorData);
+            console.log("razorData",razorData); 
             await OrderModel.findOneAndUpdate({ _id: orderData._id }, { orderId: razorData.id });
             razorId = process.env.RAZOR_PAY_ID;
             
